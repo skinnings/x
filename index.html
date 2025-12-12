@@ -3,66 +3,199 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>XXXX</title>
+<title>XXXX BEST FG — Biosite</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{width:100%;height:100%;overflow-x:hidden;font-family:Inter,Arial,sans-serif;background:#000;color:#fff;position:relative}
+/* Reset & globals */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow-x:hidden;font-family:'Playfair Display',serif;background:#000;color:#fff;position:relative}
 
-  /* Navbar */
-  nav{position:fixed;top:0;left:0;width:100%;height:60px;background:#000;display:flex;align-items:center;padding:0 24px;gap:24px;z-index:10}
-  .nav-title{font-weight:900;font-size:1.5rem;background:linear-gradient(90deg,#ff4b4b,#ff8a4b,#ffd54b,#a8ff4b,#4bffb0,#4bd2ff,#7a4bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 8s linear infinite}
-  @keyframes rainbow{0%{background-position:0%}100%{background-position:100%}}
-  .nav-link{color:#fff;text-decoration:none;font-weight:600;transition:0.3s;text-shadow:0 0 2px #fff}
-  .nav-link.active{color:#65c2d6;text-shadow:0 0 6px #65c2d6}
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap');
+body{font-family:'Inter',Arial,sans-serif}
 
-  /* HOME Content */
-  #home{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding-top:60px;text-align:center;position:relative;z-index:5}
-  #home h1{font-size:2rem;font-weight:900;color:#fff;text-shadow:0 0 10px rgba(255,255,255,0.2),0 0 20px rgba(101,194,214,0.2)}
-  #home p{margin-top:12px;font-size:1rem;color:#ccc;text-shadow:0 0 6px rgba(255,255,255,0.1)}
+/* Navbar */
+nav{position:fixed;top:0;left:0;width:100%;height:60px;background:#000;display:flex;align-items:center;padding:0 24px;gap:24px;z-index:10}
+.nav-title{font-weight:900;font-size:1.5rem;background:linear-gradient(90deg,#ff4b4b,#ff8a4b,#ffd54b,#a8ff4b,#4bffb0,#4bd2ff,#7a4bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 8s linear infinite}
+.nav-link{color:#fff;text-decoration:none;font-weight:600;transition:0.3s;text-shadow:0 0 2px #fff}
+.nav-link.active{color:#65c2d6;text-shadow:0 0 6px #65c2d6}
+@keyframes rainbow{0%{background-position:0%}100%{background-position:100%}}
 
-  /* Floating particles background */
-  .particle{position:absolute;background:rgba(255,255,255,0.03);border-radius:50%;animation:float 20s linear infinite;pointer-events:none;z-index:1}
-  @keyframes float{0%{transform:translateY(0) translateX(0)}50%{transform:translateY(-50px) translateX(30px)}100%{transform:translateY(0) translateX(0)}}
+/* Intro Screen */
+#intro{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;cursor:pointer}
+#intro h1{font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;color:#fff;text-shadow:0 0 20px rgba(255,255,255,0.1);letter-spacing:2px;background:linear-gradient(90deg,#ff4b4b,#ff8a4b,#ffd54b,#a8ff4b,#4bffb0,#4bd2ff,#7a4bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 8s linear infinite}
+#intro p{margin-top:16px;font-size:1.25rem;color:#ccc;text-shadow:0 0 6px rgba(255,255,255,0.1)}
+
+/* HOME */
+#home{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding-top:60px;text-align:center;position:relative;z-index:5}
+#home h1{font-size:1.5rem;font-weight:400;color:#fff;text-shadow:0 0 10px rgba(255,255,255,0.1),0 0 20px rgba(101,194,214,0.1);max-width:800px;line-height:1.4}
+#home p{margin-top:12px;font-size:1rem;color:#ccc;text-shadow:0 0 6px rgba(255,255,255,0.05)}
+
+/* MEMBERS Page */
+#members{padding:80px 24px 24px 24px;display:none;max-width:1200px;margin:0 auto}
+.members-title{font-weight:900;letter-spacing:4px;font-size:2rem;text-align:center;margin-bottom:24px;background:linear-gradient(90deg,#ff4b4b,#ff8a4b,#ffd54b,#a8ff4b,#4bffb0,#4bd2ff,#7a4bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 8s linear infinite}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;margin-top:24px}
+.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:0;overflow:hidden;border:1px solid rgba(255,255,255,0.03);backdrop-filter:blur(6px);box-shadow:0 8px 20px rgba(0,0,0,0.6);position:relative;transition:transform 0.3s;animation:floatCard 6s ease-in-out infinite alternate}
+.card:hover{transform:translateY(-6px)}
+@keyframes floatCard{0%{transform:translateY(0)}100%{transform:translateY(-6px)}}
+.card .img{height:180px;background-size:cover;background-position:center}
+.card .meta{padding:12px;text-align:center}
+.card .meta .name{font-weight:800;margin-bottom:6px}
+.card .view{display:inline-block;margin-top:8px;padding:6px 10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:#65c2d6;font-weight:700;text-decoration:none;transition:0.3s}
+.card .view:hover{background:rgba(101,194,214,0.1);border-color:rgba(101,194,214,0.3)}
+
+/* Modal */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;padding:20px;z-index:100}
+.modal{width:100%;max-width:800px;background:#0d0f11;border-radius:12px;padding:22px;border:1px solid rgba(255,255,255,0.03);display:flex;gap:18px;flex-wrap:wrap;position:relative}
+.modal .avatar{width:160px;height:160px;border-radius:10px;background:#222;display:flex;align-items:center;justify-content:center;font-size:48px;overflow:hidden}
+.modal .right{flex:1}
+.close{position:absolute;top:12px;right:12px;background:transparent;border:0;color:#fff;font-size:20px;cursor:pointer}
+
+/* Floating Particles */
+.particle{position:absolute;background:rgba(255,255,255,0.03);border-radius:50%;animation:float 20s linear infinite;pointer-events:none;z-index:1}
+@keyframes float{0%{transform:translateY(0) translateX(0)}50%{transform:translateY(-50px) translateX(30px)}100%{transform:translateY(0) translateX(0)}}
+
+/* Effects per theme */
+.snow{box-shadow:0 0 6px rgba(255,255,255,0.3);border-radius:50%}
+.rain{box-shadow:0 0 4px rgba(101,194,214,0.2);border-radius:2px}
+.hearts{box-shadow:0 0 6px rgba(255,182,193,0.4);border-radius:50%}
+.neon{box-shadow:0 0 10px rgba(255,20,147,0.5)}
 </style>
 </head>
 <body>
 
+<!-- Intro Screen -->
+<div id="intro">
+  <h1>Enter Heaven</h1>
+  <p>Click to enter</p>
+</div>
+
 <!-- Navbar -->
 <nav>
   <div class="nav-title">XXXX BEST FG</div>
-  <a href="index.html" class="nav-link active">Home</a>
-  <a href="members.html" class="nav-link">Members</a>
+  <a href="#" class="nav-link active" id="homeLink">Home</a>
+  <a href="#" class="nav-link" id="membersLink">Members</a>
 </nav>
 
-<!-- HOME Content -->
+<!-- HOME -->
 <div id="home">
   <h1>© 2025 — This website serves as a biosite for all members of the FG xxxx</h1>
-  <p>Explore the members and their profiles by navigating to the Members page.</p>
+  <p>Navigate to the Members page to explore each profile.</p>
 </div>
 
-<!-- Floating Particles -->
-<div class="particle" style="width:6px;height:6px;top:15%;left:25%;animation-duration:18s"></div>
-<div class="particle" style="width:4px;height:4px;top:45%;left:60%;animation-duration:15s"></div>
-<div class="particle" style="width:5px;height:5px;top:70%;left:35%;animation-duration:20s"></div>
-<div class="particle" style="width:3px;height:3px;top:55%;left:50%;animation-duration:12s"></div>
-<div class="particle" style="width:4px;height:4px;top:30%;left:80%;animation-duration:22s"></div>
+<!-- MEMBERS -->
+<div id="members">
+  <div class="members-title">xxxx — Members</div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<!-- Modal -->
+<div id="modalBack" class="modal-backdrop">
+  <div class="modal">
+    <div class="avatar" id="modalAvatar"></div>
+    <div class="right">
+      <h2 id="modalName">Name</h2>
+      <p id="modalRole">Role</p>
+      <p id="modalBio">Bio</p>
+    </div>
+    <button class="close" id="closeModal">✕</button>
+  </div>
+</div>
 
 <!-- Music -->
-<audio id="bgAudio" src="https://files.catbox.moe/613c48.mp3" preload="auto" autoplay loop></audio>
+<audio id="bgAudio" autoplay loop></audio>
 
 <script>
 const bgAudio = document.getElementById('bgAudio');
-bgAudio.volume = 0.25;
+let currentMember = null;
 
-// Continue playback from sessionStorage
-const savedTime = sessionStorage.getItem('bgAudioTime');
-if(savedTime) bgAudio.currentTime = parseFloat(savedTime);
-bgAudio.play().catch(()=>{});
+// Members data
+const members = [
+  {name:'miu',pfp:'https://files.catbox.moe/d07g2i.webp',badge:'https://files.catbox.moe/10upcp.png',theme:'black',song:'https://files.catbox.moe/jt9llz.mp3',effect:'snow',role:'Member',bio:'Bio for miu'},
+  {name:'skin',pfp:'https://files.catbox.moe/gvdo4e.jpg',badge:'https://files.catbox.moe/28gp36.png',theme:'black',song:'https://files.catbox.moe/212rcy.mp3',effect:'snow',role:'Member',bio:'Bio for skin'},
+  {name:'bully',pfp:'https://files.catbox.moe/q7dy8o.webp',badge:'https://files.catbox.moe/dxj7nl.png',theme:'black',song:'https://files.catbox.moe/tzhl3v.mp3',effect:'rain',role:'Member',bio:'Bio for bully'},
+  {name:'mimi',pfp:'https://files.catbox.moe/tqlhda.webp',badge:'https://files.catbox.moe/osadpa.png',theme:'lightpink',song:'https://files.catbox.moe/jt9llz.mp3',effect:'hearts',role:'Member',bio:'Bio for mimi'},
+  {name:'grimjaydes',pfp:'https://files.catbox.moe/wm9vex.webp',badge:'https://files.catbox.moe/mpczew.png',theme:'neon',song:'https://files.catbox.moe/l49s3o.mp3',effect:'neon',role:'Member',bio:'Bio for grimjaydes'},
+];
 
-// Save current time on exit
-window.addEventListener('beforeunload',()=>{
-  sessionStorage.setItem('bgAudioTime', bgAudio.currentTime);
+// DOM
+const grid = document.getElementById('grid');
+const intro = document.getElementById('intro');
+const home = document.getElementById('home');
+const membersPage = document.getElementById('members');
+const modalBack = document.getElementById('modalBack');
+const modalAvatar = document.getElementById('modalAvatar');
+const modalName = document.getElementById('modalName');
+const modalRole = document.getElementById('modalRole');
+const modalBio = document.getElementById('modalBio');
+const closeModal = document.getElementById('closeModal');
+
+const homeLink = document.getElementById('homeLink');
+const membersLink = document.getElementById('membersLink');
+
+// Intro click
+intro.addEventListener('click',()=>{
+  intro.style.display='none';
+  home.style.display='flex';
+  bgAudio.src='https://files.catbox.moe/613c48.mp3';
+  bgAudio.currentTime = 0;
+  bgAudio.volume=0.25;
+  bgAudio.play();
 });
+
+// Navigation
+homeLink.addEventListener('click',(e)=>{
+  e.preventDefault();
+  home.style.display='flex';
+  membersPage.style.display='none';
+  homeLink.classList.add('active');
+  membersLink.classList.remove('active');
+});
+membersLink.addEventListener('click',(e)=>{
+  e.preventDefault();
+  home.style.display='none';
+  membersPage.style.display='block';
+  homeLink.classList.remove('active');
+  membersLink.classList.add('active');
+  renderMembers();
+});
+
+// Render member cards
+function renderMembers(){
+  grid.innerHTML='';
+  members.forEach(m=>{
+    const card = document.createElement('div');
+    card.className='card';
+    card.innerHTML=`
+      <div class="img" style="background-image:url(${m.pfp})"></div>
+      <div class="meta">
+        <div class="name">${m.name}</div>
+        <a href="#" class="view">View Profile</a>
+      </div>`;
+    card.querySelector('.view').addEventListener('click',e=>{
+      e.preventDefault();
+      openModal(m);
+    });
+    grid.appendChild(card);
+  });
+}
+
+// Open modal
+function openModal(member){
+  modalAvatar.style.backgroundImage=`url(${member.pfp})`;
+  modalName.textContent=member.name;
+  modalRole.textContent=member.role;
+  modalBio.textContent=member.bio;
+  modalBack.style.display='flex';
+  bgAudio.src=member.song;
+  bgAudio.currentTime=0;
+  bgAudio.volume=0.25;
+  bgAudio.play();
+}
+
+// Close modal
+closeModal.addEventListener('click',()=>{modalBack.style.display='none';});
+modalBack.addEventListener('click',(e)=>{if(e.target===modalBack) modalBack.style.display='none';});
+
 </script>
 </body>
 </html>
