@@ -6,20 +6,20 @@
 <title>XXXX BEST FG — Members</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{width:100%;height:100%;overflow-x:hidden;font-family:Inter,Arial,sans-serif;background:#000;color:#fff}
+  html,body{width:100%;height:100%;overflow-x:hidden;font-family:Inter,Arial,sans-serif;background:#000;color:#fff;position:relative}
 
   /* Navbar */
-  nav{position:fixed;top:0;left:0;width:100%;height:60px;background:#000;display:flex;align-items:center;padding:0 24px;gap:24px;z-index:5}
+  nav{position:fixed;top:0;left:0;width:100%;height:60px;background:#000;display:flex;align-items:center;padding:0 24px;gap:24px;z-index:10}
   .nav-title{font-weight:900;font-size:1.5rem;background:linear-gradient(90deg,#ff4b4b,#ff8a4b,#ffd54b,#a8ff4b,#4bffb0,#4bd2ff,#7a4bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 8s linear infinite}
   @keyframes rainbow{0%{background-position:0%}100%{background-position:100%}}
   .nav-link{color:#fff;text-decoration:none;font-weight:600;transition:0.3s;text-shadow:0 0 2px #fff}
   .nav-link.active{color:#65c2d6;text-shadow:0 0 6px #65c2d6}
 
-  /* Members Page */
-  #members{display:flex;flex-direction:column;align-items:center;gap:32px;padding:80px 24px}
+  /* MEMBERS Page */
+  #members{display:flex;flex-direction:column;align-items:center;gap:32px;padding:100px 24px;position:relative;z-index:5}
   #members h1{font-size:2.5rem;font-weight:900;background:linear-gradient(90deg,#ff4b4b,#ff8a4b,#ffd54b,#a8ff4b,#4bffb0,#4bd2ff,#7a4bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 8s linear infinite;text-shadow:0 0 4px #fff}
 
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;width:100%;max-width:1000px;margin-top:24px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;width:100%;max-width:1000px;margin-top:24px;position:relative;z-index:5}
   .card{
     background:rgba(255,255,255,0.02);
     backdrop-filter:blur(6px);
@@ -31,8 +31,15 @@
     align-items:center;
     justify-content:center;
     gap:8px;
-    animation:floatCard 6s ease-in-out infinite alternate, shimmerCard 6s linear infinite;
+    animation:floatCard 8s ease-in-out infinite alternate, shimmerCard 6s linear infinite;
+    box-shadow:0 4px 15px rgba(0,0,0,0.7);
+    transition:0.3s;
   }
+  .card:hover{
+    background:rgba(255,255,255,0.03);
+    transform:translateY(-4px);
+  }
+
   @keyframes floatCard{0%{transform:translateY(0)}100%{transform:translateY(-8px)}}
   @keyframes shimmerCard{0%{background-position:0% 50%}100%{background-position:100% 50%}}
 
@@ -40,6 +47,10 @@
   .card .name{color:#fff;font-weight:700;font-size:1rem;text-shadow:0 0 2px #fff}
   .card .view-btn{margin-top:8px;padding:6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#65c2d6;font-weight:600;text-decoration:none;transition:0.3s}
   .card .view-btn:hover{background:rgba(255,255,255,0.05);}
+
+  /* Floating particles background */
+  .particle{position:absolute;background:rgba(255,255,255,0.03);border-radius:50%;animation:float 15s linear infinite;pointer-events:none;z-index:1}
+  @keyframes float{0%{transform:translateY(0) translateX(0)}50%{transform:translateY(-50px) translateX(30px)}100%{transform:translateY(0) translateX(0)}}
 </style>
 </head>
 <body>
@@ -83,17 +94,26 @@
   </div>
 </div>
 
+<!-- Floating Particles -->
+<div class="particle" style="width:6px;height:6px;top:10%;left:20%;animation-duration:16s"></div>
+<div class="particle" style="width:4px;height:4px;top:40%;left:70%;animation-duration:14s"></div>
+<div class="particle" style="width:5px;height:5px;top:80%;left:30%;animation-duration:18s"></div>
+<div class="particle" style="width:3px;height:3px;top:60%;left:50%;animation-duration:12s"></div>
+<div class="particle" style="width:4px;height:4px;top:25%;left:85%;animation-duration:20s"></div>
+
 <!-- Music -->
 <audio id="bgAudio" src="https://files.catbox.moe/613c48.mp3" preload="auto" autoplay loop></audio>
 
 <script>
 const bgAudio = document.getElementById('bgAudio');
+bgAudio.volume = 0.25; // lower the volume
 
 // Continue playback from sessionStorage
 const savedTime = sessionStorage.getItem('bgAudioTime');
 if(savedTime) bgAudio.currentTime = parseFloat(savedTime);
+bgAudio.play().catch(()=>{});
 
-// Save current time on page exit
+// Save current time on exit
 window.addEventListener('beforeunload',()=>{
   sessionStorage.setItem('bgAudioTime', bgAudio.currentTime);
 });
