@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>skin — Profile</title>
+<style>
+body{margin:0;font-family:'Inter',Arial,sans-serif;background:#000;color:#fff;overflow:hidden}
+nav{position:fixed;top:0;width:100%;height:60px;background:#000;display:flex;align-items:center;padding:0 24px;gap:24px;z-index:10}
+.nav-title{font-weight:900;font-size:1.5rem;background:linear-gradient(90deg,#ff4b4b,#ff8a4b,#ffd54b,#a8ff4b,#4bffb0,#4bd2ff,#7a4bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 8s linear infinite}
+.nav-link{color:#fff;text-decoration:none;font-weight:600;transition:0.3s;text-shadow:0 0 2px #fff}
+.nav-link.active{color:#65c2d6;text-shadow:0 0 6px #65c2d6}
+@keyframes rainbow{0%{background-position:0%}100%{background-position:100%}}
+
+.profile{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding-top:60px;text-align:center;position:relative;z-index:5}
+.profile img{width:180px;height:180px;border-radius:12px;margin-bottom:12px;object-fit:cover}
+.profile h1{font-size:2rem;margin-bottom:8px}
+.profile p{color:#ccc;font-size:1rem;margin-bottom:16px;text-shadow:0 0 6px rgba(255,255,255,0.05)}
+.badge{width:48px;height:48px;position:absolute;top:100px;right:50px}
+
+/* Snow particles */
+.particle{position:absolute;background:rgba(255,255,255,0.03);border-radius:50%;animation:float 20s linear infinite;pointer-events:none;z-index:1}
+@keyframes float{0%{transform:translateY(0) translateX(0)}50%{transform:translateY(-50px) translateX(30px)}100%{transform:translateY(0) translateX(0)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-title">XXXX BEST FG</div>
+  <a href="index.html" class="nav-link" id="homeLink">Home</a>
+  <a href="members.html" class="nav-link" id="membersLink">Members</a>
+</nav>
+
+<div class="profile">
+  <img src="https://files.catbox.moe/gvdo4e.jpg" alt="skin">
+  <img class="badge" src="https://files.catbox.moe/28gp36.png" alt="badge">
+  <h1>skin</h1>
+  <p>Theme: Black | Effect: Snow</p>
+</div>
+
+<audio id="bgAudio" autoplay loop>
+  <source src="https://files.catbox.moe/212rcy.mp3" type="audio/mp3">
+</audio>
+
+<script>
+const audio=document.getElementById('bgAudio');
+audio.volume=0.25;
+audio.currentTime=0;
+
+// Snow effect
+for(let i=0;i<50;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  p.style.width=p.style.height=(Math.random()*3+2)+'px';
+  p.style.left=Math.random()*100+'%';
+  p.style.top=Math.random()*100+'%';
+  p.style.opacity=Math.random()*0.3+0.05;
+  document.body.appendChild(p);
+}
+</script>
+</body>
+</html>
