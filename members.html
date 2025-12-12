@@ -3,78 +3,97 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>XXXX BEST FG</title>
+<title>XXXX BEST FG — Members</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{width:100%;height:100%;overflow-x:hidden;font-family:Inter,Arial,sans-serif;background:#000;color:#fff}
 
-  /* Glow & shadow */
-  .glow{text-shadow:0 0 12px #fff,0 0 24px #65c2d6,0 0 36px #b58fb3}
-
   /* Navbar */
   nav{position:fixed;top:0;left:0;width:100%;height:60px;background:#000;display:flex;align-items:center;padding:0 24px;gap:24px;z-index:5}
-  .nav-title{font-weight:900;font-size:1.5rem;background:linear-gradient(90deg,#ff4b4b,#ff8a4b,#ffd54b,#a8ff4b,#4bffb0,#4bd2ff,#7a4bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 5s linear infinite;text-shadow:0 0 12px #fff,0 0 24px #65c2d6}
+  .nav-title{font-weight:900;font-size:1.5rem;background:linear-gradient(90deg,#ff4b4b,#ff8a4b,#ffd54b,#a8ff4b,#4bffb0,#4bd2ff,#7a4bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 8s linear infinite}
   @keyframes rainbow{0%{background-position:0%}100%{background-position:100%}}
-  .nav-link{color:#fff;text-decoration:none;font-weight:600;transition:0.3s;text-shadow:0 0 4px #fff}
-  .nav-link.active{color:#65c2d6;text-shadow:0 0 12px #65c2d6,0 0 24px #b58fb3}
+  .nav-link{color:#fff;text-decoration:none;font-weight:600;transition:0.3s;text-shadow:0 0 2px #fff}
+  .nav-link.active{color:#65c2d6;text-shadow:0 0 6px #65c2d6}
 
   /* Members Page */
   #members{display:flex;flex-direction:column;align-items:center;gap:32px;padding:80px 24px}
-  #members h1{font-size:2.5rem;font-weight:900;background:linear-gradient(90deg,#ff4b4b,#ff8a4b,#ffd54b,#a8ff4b,#4bffb0,#4bd2ff,#7a4bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 5s linear infinite;text-shadow:0 0 12px #fff,0 0 24px #65c2d6}
+  #members h1{font-size:2.5rem;font-weight:900;background:linear-gradient(90deg,#ff4b4b,#ff8a4b,#ffd54b,#a8ff4b,#4bffb0,#4bd2ff,#7a4bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 8s linear infinite;text-shadow:0 0 4px #fff}
 
   .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;width:100%;max-width:1000px;margin-top:24px}
   .card{
-    background:rgba(255,255,255,0.03);
+    background:rgba(255,255,255,0.02);
     backdrop-filter:blur(6px);
     border-radius:12px;
     overflow:hidden;
-    height:240px;
+    height:260px;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:12px;
-    animation:floatCard 6s ease-in-out infinite alternate, shimmerCard 4s linear infinite;
+    gap:8px;
+    animation:floatCard 6s ease-in-out infinite alternate, shimmerCard 6s linear infinite;
   }
-  @keyframes floatCard{0%{transform:translateY(0)}100%{transform:translateY(-10px)}}
+  @keyframes floatCard{0%{transform:translateY(0)}100%{transform:translateY(-8px)}}
   @keyframes shimmerCard{0%{background-position:0% 50%}100%{background-position:100% 50%}}
 
-  .card img{width:120px;height:120px;border-radius:999px;object-fit:cover;border:2px solid rgba(255,255,255,0.1)}
-  .card .name{color:#fff;font-weight:700;font-size:1rem;text-shadow:0 0 8px #fff,0 0 12px #65c2d6}
+  .card img{width:120px;height:120px;border-radius:999px;object-fit:cover;border:2px solid rgba(255,255,255,0.05)}
+  .card .name{color:#fff;font-weight:700;font-size:1rem;text-shadow:0 0 2px #fff}
+  .card .view-btn{margin-top:8px;padding:6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#65c2d6;font-weight:600;text-decoration:none;transition:0.3s}
+  .card .view-btn:hover{background:rgba(255,255,255,0.05);}
 </style>
 </head>
 <body>
 
 <!-- Navbar -->
 <nav>
-  <div class="nav-title glow">XXXX BEST FG</div>
-  <a href="index.html" class="nav-link glow">Home</a>
-  <a href="members.html" class="nav-link active glow">Members</a>
+  <div class="nav-title">XXXX BEST FG</div>
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="members.html" class="nav-link active">Members</a>
 </nav>
 
 <!-- MEMBERS Content -->
 <div id="members">
-  <h1 class="glow">xxxx — Members</h1>
+  <h1>xxxx — Members</h1>
   <div class="cards">
-    <div class="card"><img src="https://files.catbox.moe/gvdo4e.jpg" alt="skin"><div class="name glow">skin</div></div>
-    <div class="card"><img src="https://files.catbox.moe/tqlhda.webp" alt="mimi"><div class="name glow">mimi</div></div>
-    <div class="card"><img src="https://files.catbox.moe/wm9vex.webp" alt="grimjaydes"><div class="name glow">grimjaydes</div></div>
-    <div class="card"><img src="https://files.catbox.moe/q7dy8o.webp" alt="bully"><div class="name glow">bully</div></div>
-    <div class="card"><img src="https://files.catbox.moe/d07g2i.webp" alt="miu"><div class="name glow">miu</div></div>
+    <div class="card">
+      <img src="https://files.catbox.moe/gvdo4e.jpg" alt="skin">
+      <div class="name">skin</div>
+      <a href="#" class="view-btn">View Profile</a>
+    </div>
+    <div class="card">
+      <img src="https://files.catbox.moe/tqlhda.webp" alt="mimi">
+      <div class="name">mimi</div>
+      <a href="#" class="view-btn">View Profile</a>
+    </div>
+    <div class="card">
+      <img src="https://files.catbox.moe/wm9vex.webp" alt="grimjaydes">
+      <div class="name">grimjaydes</div>
+      <a href="#" class="view-btn">View Profile</a>
+    </div>
+    <div class="card">
+      <img src="https://files.catbox.moe/q7dy8o.webp" alt="bully">
+      <div class="name">bully</div>
+      <a href="#" class="view-btn">View Profile</a>
+    </div>
+    <div class="card">
+      <img src="https://files.catbox.moe/d07g2i.webp" alt="miu">
+      <div class="name">miu</div>
+      <a href="#" class="view-btn">View Profile</a>
+    </div>
   </div>
 </div>
 
+<!-- Music -->
+<audio id="bgAudio" src="https://files.catbox.moe/613c48.mp3" preload="auto" autoplay loop></audio>
+
 <script>
-const bgAudio = new Audio('https://files.catbox.moe/613c48.mp3');
-bgAudio.preload = 'auto';
-bgAudio.loop = true;
+const bgAudio = document.getElementById('bgAudio');
 
 // Continue playback from sessionStorage
 const savedTime = sessionStorage.getItem('bgAudioTime');
 if(savedTime) bgAudio.currentTime = parseFloat(savedTime);
-bgAudio.play().catch(()=>{});
 
-// Save time on exit
+// Save current time on page exit
 window.addEventListener('beforeunload',()=>{
   sessionStorage.setItem('bgAudioTime', bgAudio.currentTime);
 });
