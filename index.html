@@ -1,302 +1,310 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>xxxx — Members</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>xxxx — Members</title>
+<link rel="preload" href="https://files.catbox.moe/ho62vm.mp3" as="audio">
+<style>
+  /* Basic reset + font fallback */
+  :root{
+    --bg-black: #000;
+    --glass: rgba(255,255,255,0.04);
+    --glass-2: rgba(255,255,255,0.02);
+    --muted: rgba(230,242,245,0.72);
+    --text: #e9f5f8;
+    --accent: #7cc8d9;
+    --card-radius: 16px;
+    --card-blur: 10px;
+    --transition: 320ms cubic-bezier(.2,.9,.2,1);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;background:var(--bg-black);color:var(--text);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
 
-  <style>
-    /* Reset & fonts */
-    :root{
-      --bg-dark: #060609;
-      --bg-dark-2: #0b0d10;
-      --glass: rgba(255,255,255,0.04);
-      --glass-2: rgba(255,255,255,0.02);
-      --muted: rgba(230,242,245,0.72);
-      --text: #e6f2f5;
-      --card-hover: rgba(255,255,255,0.06);
-      --accent: #7cc8d9;
-      --radius: 14px;
-      --glass-blur: 10px;
-      --transition: 220ms cubic-bezier(.2,.9,.2,1);
-    }
+  /* INTRO SCREEN (white full) */
+  #intro {
+    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+    background: #fff; z-index:60; flex-direction:column; gap:18px;
+    transition: opacity 600ms ease, visibility 600ms;
+  }
+  #intro.hidden{opacity:0;visibility:hidden;pointer-events:none}
 
-    /* Light theme overrides */
-    :root[data-theme="light"]{
-      --bg-dark: #f5f7f8;
-      --bg-dark-2: #eef1f3;
-      --glass: rgba(9,12,14,0.04);
-      --glass-2: rgba(9,12,14,0.02);
-      --muted: rgba(7,10,12,0.72);
-      --text: #071019;
-      --card-hover: rgba(0,0,0,0.04);
-      --accent: #3a5b7c;
-    }
+  .intro-text {
+    font-size:48px;
+    font-weight:800;
+    letter-spacing:2px;
+    color:#000;
+    text-transform:none;
+    position:relative;
+    display:inline-block;
+  }
+  /* subtle glow for the text */
+  .intro-text::after{
+    content: '';
+    position:absolute; inset: -8px;
+    background: radial-gradient(closest-side, rgba(0,0,0,0.065), rgba(0,0,0,0));
+    filter: blur(24px);
+    opacity:0.85;
+    z-index:-1;
+    border-radius:8px;
+  }
+  /* elegant font look with small-serif fallback */
+  .intro-text { font-family: "Georgia", "Times New Roman", serif; color:#0b0b0b; text-shadow: 0 6px 22px rgba(11,11,11,0.06); }
 
-    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:var(--text);background:var(--bg-dark);-webkit-font-smoothing:antialiased}
-    body{display:flex;flex-direction:column;align-items:stretch}
+  .intro-sub {
+    font-size:14px;
+    color:rgba(0,0,0,0.55);
+  }
 
-    /* Subtle animated background blobs */
-    .bg-wrap{position:fixed;inset:0;pointer-events:none;z-index:0}
-    .blob{
-      position:absolute;border-radius:50%;
-      filter:blur(44px) saturate(120%);
-      opacity:0.10; mix-blend-mode: screen;
-      transform: translate3d(0,0,0);
-      animation: floaty 14s ease-in-out infinite;
-    }
-    .blob.b1{width:520px;height:520px;right:-120px;top:-120px;background:linear-gradient(135deg,#8bd9d9,#6b9ec9); animation-duration:18s}
-    .blob.b2{width:420px;height:420px;left:-100px;bottom:-160px;background:linear-gradient(145deg,#c9a8df,#8bc3d6); animation-duration:22s}
-    .blob.b3{width:220px;height:220px;left:20%;top:10%;background:linear-gradient(145deg,#ffd6a5,#ff9aa2);opacity:0.06;animation-duration:26s}
-    @keyframes floaty {0%{transform:translateY(0) translateX(0)}50%{transform:translateY(18px) translateX(8px)}100%{transform:translateY(0) translateX(0)}}
+  /* particles on white but slightly darker/translucent */
+  .intro-particles { position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:50 }
+  .intro-particles span {
+    position:absolute;
+    width:6px;height:6px;border-radius:50%;
+    background: rgba(0,0,0,0.06);
+    transform: translate3d(0,0,0);
+    animation: introFloat linear infinite;
+    filter: blur(0.5px);
+  }
+  @keyframes introFloat {
+    from { transform: translateY(0) scale(1); opacity:0.7 }
+    to   { transform: translateY(18vh) scale(1.4); opacity:0.15 }
+  }
 
-    /* Navbar */
-    .nav{
-      position:sticky;top:12px;margin:0 auto;z-index:30;
-      width:min(1200px,94%);display:flex;align-items:center;gap:16px;
-      padding:10px 14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border:1px solid var(--glass);backdrop-filter:blur(var(--glass-blur));
-      box-shadow:0 8px 30px rgba(2,6,8,0.6);
-    }
+  /* MAIN SITE (hidden behind intro) */
+  .site {
+    min-height:100vh;
+    display:flex;flex-direction:column;align-items:stretch;opacity:0;pointer-events:none;transition:opacity 600ms ease;
+    background: #000; z-index:10;
+  }
+  .site.visible{opacity:1;pointer-events:auto}
 
-    .brand{
-      display:flex;align-items:center;gap:14px;font-weight:700;
-    }
+  /* sticky navbar */
+  .nav {
+    position:sticky;top:12px;margin:12px auto;width:min(1200px,94%);display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(10px);
+    z-index:20;
+  }
+  .brand { display:flex;align-items:center;gap:12px }
+  .logo {
+    font-weight:900;font-size:18px;letter-spacing:2px;
+    background: linear-gradient(90deg,#ffd166,#ff6b6b,#8bd19b,#6fd3ff,#b58ff9);
+    background-size:200% 200%; -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation: gradientShift 6s linear infinite;
+  }
+  @keyframes gradientShift {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-    /* Animated rainbow logo (smooth shifting gradient) */
-    .logo{
-      font-weight:900;font-size:18px;letter-spacing:2px;
-      background:linear-gradient(90deg,#ff6b6b,#ffd166,#8bd19b,#6fd3ff,#b58ff9);
-      background-size:200% 200%;
-      -webkit-background-clip:text;background-clip:text;color:transparent;
-      animation: rainbowShift 6s linear infinite;
-    }
-    @keyframes rainbowShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  .nav .links { display:flex;gap:12px;align-items:center;color:var(--muted);font-size:13px }
+  .nav .links a{padding:6px 8px;border-radius:8px}
+  .nav .links a:hover{background:var(--glass-2)}
 
-    .nav-right{margin-left:auto;display:flex;gap:8px;align-items:center}
+  /* hero */
+  .hero { width:min(1100px,94%);margin:28px auto 6px;display:flex;align-items:center;justify-content:space-between;gap:20px }
+  .title { color:var(--text) }
+  .title h1{margin:0;font-size:32px;letter-spacing:0.6px}
+  .subtitle{margin-top:6px;color:var(--muted);font-size:13px}
 
-    .nav a{color:var(--muted);text-decoration:none;font-size:13px;padding:8px 10px;border-radius:8px}
-    .nav a:hover{background:var(--glass-2);color:var(--text)}
+  /* member grid */
+  .grid { width:min(1100px,94%);margin:26px auto 80px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px;padding-bottom:40px }
+  .card {
+    position:relative;
+    border-radius:14px;padding:20px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(12px);
+    transition: transform 700ms cubic-bezier(.2,.9,.2,1), box-shadow 700ms, background 400ms;
+    display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;min-height:220px;margin:6px 0;
+    will-change: transform;
+    animation: gentleMove 10s ease-in-out infinite;
+  }
+  /* slow subtle movement for each card (slightly different via inline style) */
+  @keyframes gentleMove {0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
 
-    .toggle{
-      display:inline-flex;align-items:center;gap:8px;padding:6px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.03);cursor:pointer;color:var(--muted)
-    }
+  .card:hover{ transform: translateY(-12px) scale(1.01); box-shadow: 0 30px 70px rgba(2,6,8,0.7); background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015))}
 
-    /* Page header */
-    .hero{width:min(1100px,94%);margin:36px auto 0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:20px}
-    .hero .title{display:flex;flex-direction:column}
-    .hero h1{margin:0;font-size:36px;letter-spacing:1px}
-    .subtitle{color:var(--muted);margin-top:6px;font-size:14px}
+  .pfp { width:110px;height:110px;border-radius:14px;background:#111;border:1px solid rgba(255,255,255,0.04);background-size:cover;background-position:center;box-shadow:0 8px 22px rgba(0,0,0,0.6) }
+  .name { font-weight:700;font-size:18px;margin-top:4px }
+  .role { font-size:13px;color:var(--muted) }
+  .actions { margin-top:10px; display:flex; gap:8px; align-items:center }
+  .btn { padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04); background:transparent;color:var(--text); font-weight:700; cursor:pointer }
+  .btn.secondary { color:var(--muted); border-color:rgba(255,255,255,0.02) }
+  .view { margin-top:10px; color:var(--accent); font-weight:800; text-decoration:none; padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02) }
 
-    /* Grid */
-    .grid{width:min(1100px,94%);margin:26px auto 80px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px;z-index:10}
-    .card{
-      border-radius:14px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border:1px solid var(--glass);backdrop-filter:blur(var(--glass-blur));box-shadow:0 10px 30px rgba(2,6,8,0.6);
-      transition:transform var(--transition), box-shadow var(--transition), background var(--transition);
-      display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;min-height:210px;
-    }
-    .card:hover{transform:translateY(-8px);box-shadow:0 22px 50px rgba(2,6,8,0.7);background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015))}
+  /* footer */
+  footer{width:100%;padding:32px 0 48px;display:flex;align-items:center;justify-content:center}
+  .foot-inner{width:min(1100px,94%);text-align:center;color:var(--muted);font-size:13px}
 
-    .pfp{
-      width:96px;height:96px;border-radius:12px;background:#1b1d20;border:1px solid rgba(255,255,255,0.03);display:inline-block;object-fit:cover
-    }
+  /* small responsive */
+  @media (max-width:720px){
+    .intro-text{font-size:34px}
+    .pfp{width:92px;height:92px}
+    .hero{flex-direction:column;align-items:flex-start;gap:8px}
+  }
 
-    .name{font-weight:700;font-size:18px}
-    .mini{font-size:13px;color:var(--muted)}
-    .view-btn{margin-top:8px;padding:8px 12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--accent);font-weight:700;text-decoration:none;display:inline-block}
-
-    /* footer */
-    footer{width:100%;padding:30px 0 56px;display:flex;align-items:center;justify-content:center;z-index:10}
-    .foot-inner{width:min(1100px,94%);text-align:center;color:var(--muted);font-size:13px}
-
-    /* Loading overlay */
-    #loader{
-      position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(2,6,8,0.85),rgba(2,6,8,0.92));z-index:80;backdrop-filter:blur(2px);opacity:1;transition:opacity 400ms ease;
-      flex-direction:column;gap:14px;color:white
-    }
-    #loader.hidden{opacity:0;pointer-events:none;visibility:hidden}
-    .welcome{
-      font-size:20px;font-weight:800;letter-spacing:2px;
-      background:linear-gradient(90deg,#ffd166,#ff6b6b,#8bd19b,#6fd3ff,#b58ff9);
-      -webkit-background-clip:text;background-clip:text;color:transparent;
-      animation: rainbowShift 5s linear infinite;
-    }
-    .loader-dot{width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,0.9);opacity:0.9;margin:0 6px;display:inline-block;transform:translateY(0); animation: bounce 1s infinite ease-in-out}
-    .loader-dots{display:flex;align-items:center;gap:6px}
-    .loader-dot:nth-child(2){animation-delay:0.15s}
-    .loader-dot:nth-child(3){animation-delay:0.30s}
-    @keyframes bounce{0%{transform:translateY(0);opacity:0.3}50%{transform:translateY(-10px);opacity:1}100%{transform:translateY(0);opacity:0.3}}
-
-    /* Responsive tweaks */
-    @media (max-width:720px){
-      .nav{padding:10px;border-radius:10px}
-      .hero{flex-direction:column;align-items:flex-start;gap:10px}
-      .pfp{width:84px;height:84px}
-      .card{padding:16px}
-      h1{font-size:28px}
-    }
-
-    /* small focus styles */
-    a:focus,button:focus{outline:3px solid rgba(123,171,191,0.12);outline-offset:3px;border-radius:8px}
-  </style>
+  /* focus outlines */
+  :focus{outline:3px solid rgba(124,200,217,0.08);outline-offset:3px}
+</style>
 </head>
 <body>
 
-  <!-- Background blobs -->
-  <div class="bg-wrap" aria-hidden="true">
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="blob b3"></div>
+  <!-- AUDIO (user-initiated on click) -->
+  <audio id="bgAudio" preload="auto" src="https://files.catbox.moe/ho62vm.mp3"></audio>
+
+  <!-- INTRO -->
+  <div id="intro" role="dialog" aria-label="Enter site">
+    <div class="intro-particles" aria-hidden="true" id="introParticles"></div>
+
+    <button id="enterBtn" style="all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px" aria-label="Enter heaven">
+      <div class="intro-text">enter heaven</div>
+      <div class="intro-sub">click anywhere to enter</div>
+    </button>
   </div>
 
-  <!-- Loader -->
-  <div id="loader" role="status" aria-live="polite">
-    <div class="welcome">welcome to heaven</div>
-    <div class="loader-dots" aria-hidden="true">
-      <span class="loader-dot"></span>
-      <span class="loader-dot"></span>
-      <span class="loader-dot"></span>
-    </div>
-  </div>
+  <!-- SITE (hidden until intro dismissed) -->
+  <div class="site" id="siteRoot" aria-hidden="true">
+    <!-- background remains black -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">xxxx</div>
+        <div style="font-size:13px;color:var(--muted)">members</div>
+      </div>
+      <div class="links" role="toolbar" aria-label="Site links">
+        <a href="#members">Members</a>
+        <a href="#footer">Contact</a>
+      </div>
+    </nav>
 
-  <!-- Navigation -->
-  <nav class="nav" role="navigation" aria-label="Main navigation">
-    <div class="brand" aria-hidden="false">
-      <div class="logo">xxxx</div>
-      <div style="font-size:13px;color:var(--muted);margin-left:6px">members</div>
-    </div>
+    <header class="hero" id="members" role="banner">
+      <div class="title">
+        <h1>xxxx — Members</h1>
+        <div class="subtitle">Clean, minimal directory. Click a card to open their page.</div>
+      </div>
+    </header>
 
-    <div class="nav-right" role="toolbar" aria-label="Site controls">
-      <a href="/" title="Home">Home</a>
-      <a href="#members" title="Members">Members</a>
-
-      <button id="themeToggle" class="toggle" aria-pressed="false" title="Toggle light/dark">
-        <span id="themeIcon">🌙</span>
-        <span style="font-size:13px;color:var(--muted)">Theme</span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <header class="hero" id="members" role="banner">
-    <div class="title">
-      <h1>xxxx — Members</h1>
-      <div class="subtitle">Clean, minimal member directory. Click a card to open their page.</div>
-    </div>
-  </header>
-
-  <!-- Member grid -->
-  <main>
-    <section class="grid" aria-label="Members list">
-      <!-- Member: skin -->
-      <a class="card-link" href="/skin" aria-label="skin member page">
-        <article class="card" role="article">
-          <div class="pfp" aria-hidden="true" style="background-image: url('https://via.placeholder.com/320x320?text=skin'); background-size:cover;background-position:center"></div>
+    <main>
+      <section class="grid" aria-label="Members list">
+        <!-- skin -->
+        <article class="card" style="animation-delay:0s">
+          <div class="pfp" style="background-image:url('https://files.catbox.moe/gvdo4e.jpg');"></div>
           <div class="name">skin</div>
-          <div class="mini">Founder • vibes curator</div>
-          <span class="view-btn" aria-hidden="true">View profile</span>
+          <div class="role">Founder • vibes curator</div>
+          <div class="actions">
+            <a class="view" href="/skin" aria-label="Open skin profile">View profile</a>
+          </div>
         </article>
-      </a>
 
-      <!-- bully -->
-      <a class="card-link" href="/bully" aria-label="bully member page">
-        <article class="card" role="article">
-          <div class="pfp" style="background-image: url('https://via.placeholder.com/320x320?text=bully'); background-size:cover;background-position:center"></div>
+        <!-- bully -->
+        <article class="card" style="animation-delay:0.6s">
+          <div class="pfp" style="background-image:url('https://via.placeholder.com/320x320?text=bully');"></div>
           <div class="name">bully</div>
-          <div class="mini">Member • art & meme curator</div>
-          <span class="view-btn" aria-hidden="true">View profile</span>
+          <div class="role">Member • art & meme curator</div>
+          <div class="actions">
+            <a class="view" href="/bully" aria-label="Open bully profile">View profile</a>
+          </div>
         </article>
-      </a>
 
-      <!-- mimi -->
-      <a class="card-link" href="/mimi" aria-label="mimi member page">
-        <article class="card" role="article">
-          <div class="pfp" style="background-image: url('https://via.placeholder.com/320x320?text=mimi'); background-size:cover;background-position:center"></div>
+        <!-- mimi -->
+        <article class="card" style="animation-delay:1.1s">
+          <div class="pfp" style="background-image:url('https://files.catbox.moe/tqlhda.webp');"></div>
           <div class="name">mimi</div>
-          <div class="mini">Member • digital artist</div>
-          <span class="view-btn" aria-hidden="true">View profile</span>
+          <div class="role">Member • digital artist</div>
+          <div class="actions">
+            <a class="view" href="/mimi" aria-label="Open mimi profile">View profile</a>
+          </div>
         </article>
-      </a>
 
-      <!-- miu -->
-      <a class="card-link" href="/miu" aria-label="miu member page">
-        <article class="card" role="article">
-          <div class="pfp" style="background-image: url('https://via.placeholder.com/320x320?text=miu'); background-size:cover;background-position:center"></div>
+        <!-- miu -->
+        <article class="card" style="animation-delay:1.6s">
+          <div class="pfp" style="background-image:url('https://via.placeholder.com/320x320?text=miu');"></div>
           <div class="name">miu</div>
-          <div class="mini">Member • chill beats</div>
-          <span class="view-btn" aria-hidden="true">View profile</span>
+          <div class="role">Member • chill beats</div>
+          <div class="actions">
+            <a class="view" href="/miu" aria-label="Open miu profile">View profile</a>
+          </div>
         </article>
-      </a>
 
-      <!-- grimjaydes -->
-      <a class="card-link" href="/grimjaydes" aria-label="grimjaydes member page">
-        <article class="card" role="article">
-          <div class="pfp" style="background-image: url('https://via.placeholder.com/320x320?text=grimjaydes'); background-size:cover;background-position:center"></div>
+        <!-- grimjaydes -->
+        <article class="card" style="animation-delay:2.1s">
+          <div class="pfp" style="background-image:url('https://files.catbox.moe/wm9vex.webp');"></div>
           <div class="name">grimjaydes</div>
-          <div class="mini">Member • code & builds</div>
-          <span class="view-btn" aria-hidden="true">View profile</span>
+          <div class="role">Member • code & builds</div>
+          <div class="actions">
+            <a class="view" href="/grimjaydes" aria-label="Open grimjaydes profile">View profile</a>
+          </div>
         </article>
-      </a>
-    </section>
-  </main>
+      </section>
+    </main>
 
-  <!-- Footer -->
-  <footer>
-    <div class="foot-inner">
-      © xxxx • built with care — minimal, private, and aesthetic.
-    </div>
-  </footer>
+    <footer id="footer">
+      <div class="foot-inner">© xxxx • built with care — minimal & private.</div>
+    </footer>
+  </div>
 
-  <!-- Script: theme toggle, loader hide -->
-  <script>
-    (function(){
-      const root = document.documentElement;
-      const stored = localStorage.getItem('site-theme');
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const initial = stored || (prefersDark ? 'dark' : 'light');
-      if(initial === 'light') root.setAttribute('data-theme', 'light');
+<script>
+(function(){
+  const intro = document.getElementById('intro');
+  const enterBtn = document.getElementById('enterBtn');
+  const site = document.getElementById('siteRoot');
+  const audio = document.getElementById('bgAudio');
 
-      // Loader hide on load
-      const loader = document.getElementById('loader');
-      window.addEventListener('load', () => {
-        // small delay so the welcome reads for a moment
-        setTimeout(()=> {
-          loader.classList.add('hidden');
-          setTimeout(()=> loader.style.display='none', 450);
-        }, 700);
+  // create intro particles (slightly darker/translucent)
+  const particles = document.getElementById('introParticles');
+  const P = 30;
+  for(let i=0;i<P;i++){
+    const s = document.createElement('span');
+    const size = (Math.random()*6)+4;
+    s.style.width = s.style.height = size+'px';
+    s.style.left = (Math.random()*100)+'%';
+    s.style.top = (Math.random()*85)+'%';
+    s.style.opacity = (Math.random()*0.45 + 0.15).toString();
+    s.style.animationDuration = (8 + Math.random()*14) + 's';
+    s.style.transform = `translateY(0)`;
+    particles.appendChild(s);
+  }
+
+  // helper to reveal site & play audio
+  function revealAndPlay(){
+    // hide intro
+    intro.classList.add('hidden');
+    // show site after a small delay so fade feels smooth
+    setTimeout(()=> {
+      site.classList.add('visible');
+      site.setAttribute('aria-hidden','false');
+    }, 420);
+
+    // try to play audio - user clicked so play should be allowed
+    audio.currentTime = 0;
+    const p = audio.play();
+    if(p && typeof p.then === 'function') {
+      p.catch(err => {
+        // autoplay rejection handled gracefully
+        console.warn('Audio play failed:', err);
       });
+    }
+  }
 
-      // Theme toggle
-      const themeToggle = document.getElementById('themeToggle');
-      const themeIcon = document.getElementById('themeIcon');
-      function updateToggle(){
-        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        themeToggle.setAttribute('aria-pressed', isLight ? 'true' : 'false');
-        themeIcon.textContent = isLight ? '☀️' : '🌙';
-      }
-      updateToggle();
+  // click anywhere on intro to enter
+  enterBtn.addEventListener('click', revealAndPlay);
+  // also allow keyboard Enter / Space for accessibility
+  enterBtn.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); revealAndPlay(); }
+  });
 
-      themeToggle.addEventListener('click', ()=>{
-        const cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-        if(cur === 'light'){
-          document.documentElement.removeAttribute('data-theme');
-          localStorage.setItem('site-theme', 'dark');
-        } else {
-          document.documentElement.setAttribute('data-theme','light');
-          localStorage.setItem('site-theme', 'light');
-        }
-        updateToggle();
-      });
+  // also allow clicking background area (not only the button)
+  intro.addEventListener('click', (e)=>{
+    // if they clicked an actual interactive child, ignore (the button handles it)
+    if(e.target === intro) revealAndPlay();
+  });
 
-      // Accessibility: allow cards to be keyboard activated
-      document.querySelectorAll('.card-link').forEach(a=>{
-        a.addEventListener('keydown', (e)=>{
-          if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); a.click(); }
-        });
-      });
+  // Prevent accidental right-click dragging starting playback: only handle primary button
+  enterBtn.addEventListener('pointerdown', (e)=>{
+    if(e.button !== 0) e.preventDefault();
+  });
 
-    })();
-  </script>
+  // Accessibility: focus the button
+  enterBtn.focus();
+})();
+</script>
+
 </body>
 </html>
