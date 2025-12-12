@@ -51,6 +51,16 @@
   /* Floating particles background */
   .particle{position:absolute;background:rgba(255,255,255,0.03);border-radius:50%;animation:float 15s linear infinite;pointer-events:none;z-index:1}
   @keyframes float{0%{transform:translateY(0) translateX(0)}50%{transform:translateY(-50px) translateX(30px)}100%{transform:translateY(0) translateX(0)}}
+
+  /* Modal */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;padding:20px;z-index:20;transition:opacity 0.3s}
+  .modal{width:100%;max-width:500px;background:rgba(10,12,14,0.95);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;backdrop-filter:blur(8px);box-shadow:0 8px 20px rgba(0,0,0,0.8);position:relative}
+  .modal img{width:140px;height:140px;border-radius:999px;object-fit:cover;margin:0 auto;border:2px solid rgba(255,255,255,0.05)}
+  .modal .modal-name{text-align:center;font-size:1.5rem;font-weight:800;color:#fff}
+  .modal .modal-role{text-align:center;color:#65c2d6;font-weight:600;font-size:1rem}
+  .modal .modal-bio{text-align:center;color:#fff;opacity:0.8;font-size:0.95rem}
+  .modal .modal-since{text-align:center;color:#aaa;font-size:0.8rem}
+  .close-modal{position:absolute;top:10px;right:12px;background:transparent;border:none;color:#fff;font-size:1.2rem;cursor:pointer}
 </style>
 </head>
 <body>
@@ -65,33 +75,7 @@
 <!-- MEMBERS Content -->
 <div id="members">
   <h1>xxxx — Members</h1>
-  <div class="cards">
-    <div class="card">
-      <img src="https://files.catbox.moe/gvdo4e.jpg" alt="skin">
-      <div class="name">skin</div>
-      <a href="#" class="view-btn">View Profile</a>
-    </div>
-    <div class="card">
-      <img src="https://files.catbox.moe/tqlhda.webp" alt="mimi">
-      <div class="name">mimi</div>
-      <a href="#" class="view-btn">View Profile</a>
-    </div>
-    <div class="card">
-      <img src="https://files.catbox.moe/wm9vex.webp" alt="grimjaydes">
-      <div class="name">grimjaydes</div>
-      <a href="#" class="view-btn">View Profile</a>
-    </div>
-    <div class="card">
-      <img src="https://files.catbox.moe/q7dy8o.webp" alt="bully">
-      <div class="name">bully</div>
-      <a href="#" class="view-btn">View Profile</a>
-    </div>
-    <div class="card">
-      <img src="https://files.catbox.moe/d07g2i.webp" alt="miu">
-      <div class="name">miu</div>
-      <a href="#" class="view-btn">View Profile</a>
-    </div>
-  </div>
+  <div class="cards"></div>
 </div>
 
 <!-- Floating Particles -->
@@ -101,22 +85,73 @@
 <div class="particle" style="width:3px;height:3px;top:60%;left:50%;animation-duration:12s"></div>
 <div class="particle" style="width:4px;height:4px;top:25%;left:85%;animation-duration:20s"></div>
 
+<!-- Modal -->
+<div id="modalBackdrop" class="modal-backdrop">
+  <div class="modal">
+    <button class="close-modal">✕</button>
+    <img id="modalAvatar" src="" alt="Avatar">
+    <div class="modal-name" id="modalName"></div>
+    <div class="modal-role" id="modalRole"></div>
+    <div class="modal-bio" id="modalBio"></div>
+    <div class="modal-since" id="modalSince"></div>
+  </div>
+</div>
+
 <!-- Music -->
 <audio id="bgAudio" src="https://files.catbox.moe/613c48.mp3" preload="auto" autoplay loop></audio>
 
 <script>
 const bgAudio = document.getElementById('bgAudio');
-bgAudio.volume = 0.25; // lower the volume
+bgAudio.volume = 0.25;
 
-// Continue playback from sessionStorage
+// MEMBERS data
+const members = [
+  {name:'skin',img:'https://files.catbox.moe/gvdo4e.jpg',role:'OWNER',bio:'LIVING DEAD BOY',since:'2019-04-01'},
+  {name:'mimi',img:'https://files.catbox.moe/tqlhda.webp',role:'VIP',bio:'XX_FEMBOYWARE_420_BLAZE_IT_XX',since:'2020-11-08'},
+  {name:'grimjaydes',img:'https://files.catbox.moe/wm9vex.webp',role:'NABI',bio:'PUSHING COIN',since:'2022-02-21'},
+  {name:'bully',img:'https://files.catbox.moe/q7dy8o.webp',role:'MEMBER',bio:'BRUTAL & BOSSY',since:'2021-06-12'},
+  {name:'miu',img:'https://files.catbox.moe/d07g2i.webp',role:'MEMBER',bio:'CUTIE PIE',since:'2023-01-15'}
+];
+
+// Render cards
+const cardsContainer = document.querySelector('.cards');
+members.forEach((m,idx)=>{
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `<img src="${m.img}" alt="${m.name}"><div class="name">${m.name}</div><a href="#" class="view-btn" data-index="${idx}">View Profile</a>`;
+  cardsContainer.appendChild(card);
+});
+
+// Modal logic
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalAvatar = document.getElementById('modalAvatar');
+const modalName = document.getElementById('modalName');
+const modalRole = document.getElementById('modalRole');
+const modalBio = document.getElementById('modalBio');
+const modalSince = document.getElementById('modalSince');
+
+document.querySelectorAll('.view-btn').forEach(btn=>{
+  btn.addEventListener('click', e=>{
+    e.preventDefault();
+    const m = members[btn.dataset.index];
+    modalAvatar.src = m.img;
+    modalName.textContent = m.name;
+    modalRole.textContent = m.role;
+    modalBio.textContent = m.bio;
+    modalSince.textContent = `Member since ${m.since}`;
+    modalBackdrop.style.display = 'flex';
+    modalBackdrop.style.opacity = 0;
+    requestAnimationFrame(()=>{modalBackdrop.style.opacity = 1});
+  });
+});
+
+document.querySelector('.close-modal').addEventListener('click',()=>{modalBackdrop.style.opacity=0;setTimeout(()=>{modalBackdrop.style.display='none'},300)});
+modalBackdrop.addEventListener('click',e=>{if(e.target===modalBackdrop){modalBackdrop.style.opacity=0;setTimeout(()=>{modalBackdrop.style.display='none'},300)}});
+
+// Preserve music time across pages
 const savedTime = sessionStorage.getItem('bgAudioTime');
 if(savedTime) bgAudio.currentTime = parseFloat(savedTime);
-bgAudio.play().catch(()=>{});
-
-// Save current time on exit
-window.addEventListener('beforeunload',()=>{
-  sessionStorage.setItem('bgAudioTime', bgAudio.currentTime);
-});
+window.addEventListener('beforeunload',()=>{sessionStorage.setItem('bgAudioTime', bgAudio.currentTime)});
 </script>
 </body>
 </html>
