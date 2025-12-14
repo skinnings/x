@@ -9,18 +9,23 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            /* Disable text selection and context menu */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         body {
-            /* Terminal font and dark pink background instead of bright gradient */
             font-family: 'Courier New', monospace;
-            background: #1a0a10;
+            background: #0a0408;
             min-height: 100vh;
-            color: #e0c0d0;
+            color: #f0d0e0;
             overflow: hidden;
             position: relative;
         }
 
+        /* Improved hearts effect with realistic falling */
         .hearts {
             position: absolute;
             width: 100%;
@@ -33,14 +38,14 @@
             position: absolute;
             top: -10px;
             font-size: 1.5rem;
-            /* More subtle pink hearts */
-            color: rgba(255, 182, 193, 0.25);
+            color: rgba(255, 182, 193, 0.6);
             animation: float-hearts linear infinite;
         }
 
         @keyframes float-hearts {
             to {
-                transform: translateY(100vh) rotate(360deg);
+                transform: translateY(105vh) rotate(360deg);
+                opacity: 0;
             }
         }
 
@@ -55,40 +60,52 @@
             padding: 2rem;
         }
 
-        /* Card-style profile container matching terminal aesthetic */
+        /* Updated card layout with badge in gray box on top */
         .profile-card {
-            background: rgba(30, 20, 25, 0.9);
-            border: 1px solid rgba(255, 182, 193, 0.2);
-            border-radius: 12px;
-            padding: 3rem 2.5rem;
+            background: rgba(20, 10, 15, 0.95);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            border-radius: 16px;
+            padding: 0;
             text-align: center;
-            max-width: 400px;
+            max-width: 380px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(255, 182, 193, 0.1);
         }
 
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255, 182, 193, 0.3);
-            margin-bottom: 1.5rem;
-        }
-
-        .name {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            letter-spacing: 2px;
-            color: #e0c0d0;
+        /* Gray box at top for badge icon */
+        .badge-container {
+            background: rgba(50, 35, 40, 0.5);
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 182, 193, 0.2);
         }
 
         .badge {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 2rem;
+            width: 50px;
+            height: 50px;
             opacity: 0.9;
         }
 
-        /* Volume control at bottom left */
+        /* Main content area with pfp and name */
+        .profile-content {
+            padding: 3rem 2.5rem;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 182, 193, 0.4);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 20px rgba(255, 182, 193, 0.15);
+        }
+
+        .name {
+            font-size: 2rem;
+            letter-spacing: 2px;
+            color: #f0d0e0;
+        }
+
         .volume-control {
             position: fixed;
             bottom: 20px;
@@ -106,7 +123,7 @@
         .volume-btn {
             background: none;
             border: none;
-            color: #e0c0d0;
+            color: #f0d0e0;
             cursor: pointer;
             font-size: 1.2rem;
             padding: 0;
@@ -129,20 +146,20 @@
             appearance: none;
             width: 12px;
             height: 12px;
-            background: #e0c0d0;
+            background: #f0d0e0;
             cursor: pointer;
             border-radius: 50%;
         }
 
         .back-btn {
-            padding: 0.7rem 1.5rem;
+            padding: 0.8rem 2rem;
             background: rgba(255, 182, 193, 0.1);
-            color: #e0c0d0;
+            color: #f0d0e0;
             text-decoration: none;
-            border-radius: 6px;
-            margin-top: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 182, 193, 0.2);
+            border: 1px solid rgba(255, 182, 193, 0.3);
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
             letter-spacing: 1px;
@@ -151,19 +168,23 @@
 
         .back-btn:hover {
             background: rgba(255, 182, 193, 0.15);
-            border-color: rgba(255, 182, 193, 0.3);
+            border-color: rgba(255, 182, 193, 0.4);
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
     <div class="hearts" id="hearts"></div>
     
     <div class="container">
         <div class="profile-card">
-            <img src="https://files.catbox.moe/tqlhda.webp" alt="mimi" class="profile-img">
-            <div class="name">mimi</div>
-            <img src="https://files.catbox.moe/osadpa.png" alt="badge" class="badge">
-            <a href="members.html" class="back-btn">back</a>
+            <div class="badge-container">
+                <img src="https://files.catbox.moe/osadpa.png" alt="badge" class="badge">
+            </div>
+            <div class="profile-content">
+                <img src="https://files.catbox.moe/tqlhda.webp" alt="mimi" class="profile-img">
+                <div class="name">mimi</div>
+                <a href="members.html" class="back-btn">← back to members</a>
+            </div>
         </div>
     </div>
 
@@ -177,14 +198,14 @@
     </audio>
 
     <script>
-        // Generate hearts
         const heartsContainer = document.getElementById('hearts');
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 40; i++) {
             const heart = document.createElement('div');
             heart.className = 'heart';
             heart.textContent = '♡';
             heart.style.left = Math.random() * 100 + '%';
-            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            heart.style.fontSize = (Math.random() * 0.8 + 1) + 'rem';
+            heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
             heart.style.animationDelay = Math.random() * 5 + 's';
             heart.style.opacity = Math.random() * 0.5 + 0.3;
             heartsContainer.appendChild(heart);
@@ -211,6 +232,13 @@
                 audio.volume = 0.5;
                 volumeSlider.value = 50;
                 muteBtn.textContent = '🔊';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                (e.ctrlKey && e.shiftKey && e.key === 'J') || (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
             }
         });
     </script>
