@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>xxxx - Members</title>
+    <title>mimi</title>
     <style>
         * {
             margin: 0;
@@ -12,153 +12,207 @@
         }
 
         body {
-            /* Terminal font and dark background */
+            /* Terminal font and dark pink background instead of bright gradient */
             font-family: 'Courier New', monospace;
-            background: #0a0a0a;
+            background: #1a0a10;
             min-height: 100vh;
-            padding: 4rem 2rem;
+            color: #e0c0d0;
+            overflow: hidden;
             position: relative;
         }
 
-        /* Added rain effect */
-        .rain {
+        .hearts {
             position: absolute;
             width: 100%;
             height: 100%;
             pointer-events: none;
             z-index: 1;
-            top: 0;
-            left: 0;
         }
 
-        .raindrop {
+        .heart {
             position: absolute;
             top: -10px;
-            width: 1px;
-            height: 30px;
-            background: linear-gradient(transparent, rgba(255, 255, 255, 0.1));
-            animation: rain linear infinite;
+            font-size: 1.5rem;
+            /* More subtle pink hearts */
+            color: rgba(255, 182, 193, 0.25);
+            animation: float-hearts linear infinite;
         }
 
-        @keyframes rain {
+        @keyframes float-hearts {
             to {
-                transform: translateY(100vh);
+                transform: translateY(100vh) rotate(360deg);
             }
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
             position: relative;
             z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
         }
 
-        .title {
-            text-align: center;
-            font-size: 2rem;
-            color: #e0e0e0;
-            margin-bottom: 4rem;
-            letter-spacing: 2px;
-        }
-
-        .members-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            padding: 2rem 0;
-        }
-
-        /* Card style matching reference image */
-        .member-card {
-            background: rgba(20, 20, 20, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+        /* Card-style profile container matching terminal aesthetic */
+        .profile-card {
+            background: rgba(30, 20, 25, 0.9);
+            border: 1px solid rgba(255, 182, 193, 0.2);
             border-radius: 12px;
-            padding: 2.5rem 2rem;
+            padding: 3rem 2.5rem;
             text-align: center;
-            transition: all 0.3s ease;
+            max-width: 400px;
         }
 
-        .member-card:hover {
-            border-color: rgba(255, 255, 255, 0.25);
-            background: rgba(25, 25, 25, 0.9);
-        }
-
-        .member-pfp {
-            width: 120px;
-            height: 120px;
+        .profile-img {
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             object-fit: cover;
+            border: 2px solid rgba(255, 182, 193, 0.3);
             margin-bottom: 1.5rem;
-            border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Terminal-style button */
-        .view-profile-btn {
-            padding: 0.6rem 1.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .name {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            color: #e0c0d0;
+        }
+
+        .badge {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Volume control at bottom left */
+        .volume-control {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(30, 20, 25, 0.9);
+            padding: 10px 15px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 182, 193, 0.2);
+        }
+
+        .volume-btn {
+            background: none;
+            border: none;
+            color: #e0c0d0;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 182, 193, 0.2);
+            outline: none;
+            border-radius: 2px;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #e0c0d0;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .back-btn {
+            padding: 0.7rem 1.5rem;
+            background: rgba(255, 182, 193, 0.1);
+            color: #e0c0d0;
+            text-decoration: none;
             border-radius: 6px;
-            color: #e0e0e0;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 182, 193, 0.2);
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
             letter-spacing: 1px;
+            display: inline-block;
         }
 
-        .view-profile-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.3);
+        .back-btn:hover {
+            background: rgba(255, 182, 193, 0.15);
+            border-color: rgba(255, 182, 193, 0.3);
         }
     </style>
 </head>
 <body>
-    <div class="rain" id="rain"></div>
+    <div class="hearts" id="hearts"></div>
     
     <div class="container">
-        <h1 class="title">members</h1>
-        
-        <div class="members-grid">
-            <div class="member-card">
-                <img src="https://files.catbox.moe/gvdo4e.jpg" alt="skin" class="member-pfp">
-                <a href="skin.html" class="view-profile-btn">view profile</a>
-            </div>
-
-            <div class="member-card">
-                <img src="https://files.catbox.moe/q7dy8o.webp" alt="bully" class="member-pfp">
-                <a href="bully.html" class="view-profile-btn">view profile</a>
-            </div>
-
-            <div class="member-card">
-                <img src="https://files.catbox.moe/tqlhda.webp" alt="mimi" class="member-pfp">
-                <a href="mimi.html" class="view-profile-btn">view profile</a>
-            </div>
-
-            <div class="member-card">
-                <img src="https://files.catbox.moe/wm9vex.webp" alt="grimjaydes" class="member-pfp">
-                <a href="grimjaydes.html" class="view-profile-btn">view profile</a>
-            </div>
-
-            <div class="member-card">
-                <img src="https://files.catbox.moe/d07g2i.webp" alt="miu" class="member-pfp">
-                <a href="miu.html" class="view-profile-btn">view profile</a>
-            </div>
+        <div class="profile-card">
+            <img src="https://files.catbox.moe/tqlhda.webp" alt="mimi" class="profile-img">
+            <div class="name">mimi</div>
+            <img src="https://files.catbox.moe/osadpa.png" alt="badge" class="badge">
+            <a href="members.html" class="back-btn">back</a>
         </div>
     </div>
 
+    <div class="volume-control">
+        <button class="volume-btn" id="muteBtn">🔊</button>
+        <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
+    </div>
+
+    <audio id="bgMusic" autoplay loop>
+        <source src="https://files.catbox.moe/jt9llz.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
-        // Generate rain
-        const rainContainer = document.getElementById('rain');
-        for (let i = 0; i < 80; i++) {
-            const raindrop = document.createElement('div');
-            raindrop.className = 'raindrop';
-            raindrop.style.left = Math.random() * 100 + '%';
-            raindrop.style.animationDuration = (Math.random() * 1 + 0.8) + 's';
-            raindrop.style.animationDelay = Math.random() * 2 + 's';
-            rainContainer.appendChild(raindrop);
+        // Generate hearts
+        const heartsContainer = document.getElementById('hearts');
+        for (let i = 0; i < 30; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '♡';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
+            heartsContainer.appendChild(heart);
         }
+
+        // Volume control
+        const audio = document.getElementById('bgMusic');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const muteBtn = document.getElementById('muteBtn');
+        
+        audio.volume = 0.5;
+        
+        volumeSlider.addEventListener('input', (e) => {
+            audio.volume = e.target.value / 100;
+            muteBtn.textContent = audio.volume === 0 ? '🔇' : '🔊';
+        });
+        
+        muteBtn.addEventListener('click', () => {
+            if (audio.volume > 0) {
+                audio.volume = 0;
+                volumeSlider.value = 0;
+                muteBtn.textContent = '🔇';
+            } else {
+                audio.volume = 0.5;
+                volumeSlider.value = 50;
+                muteBtn.textContent = '🔊';
+            }
+        });
     </script>
 </body>
 </html>
