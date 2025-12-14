@@ -12,31 +12,23 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            /* Terminal font and pure black background */
+            font-family: 'Courier New', monospace;
             background: #000;
             min-height: 100vh;
-            /* Softer neon pink */
-            color: #d485a8;
+            color: #ff69b4;
             overflow: hidden;
             position: relative;
         }
 
+        /* More subtle neon pink background glow */
         body::before {
             content: '';
             position: absolute;
             width: 100%;
             height: 100%;
-            /* More subtle gradient */
-            background: linear-gradient(45deg, rgba(255, 20, 147, 0.1) 0%, rgba(255, 105, 180, 0.1) 50%, rgba(255, 20, 147, 0.1) 100%);
-            opacity: 0.5;
-            /* Slower pulse for calmer feel */
-            animation: neon-pulse 3s ease-in-out infinite;
-        }
-
-        @keyframes neon-pulse {
-            /* Reduced opacity range */
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.5; }
+            background: radial-gradient(circle at 50% 50%, rgba(255, 20, 147, 0.08) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         .container {
@@ -50,72 +42,153 @@
             padding: 2rem;
         }
 
+        /* Card-style profile container matching terminal aesthetic */
+        .profile-card {
+            background: rgba(20, 10, 15, 0.9);
+            border: 1px solid rgba(255, 20, 147, 0.3);
+            border-radius: 12px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.1);
+        }
+
         .profile-img {
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             object-fit: cover;
-            /* More subtle pink border */
-            border: 4px solid rgba(255, 20, 147, 0.5);
-            margin-bottom: 2rem;
-            /* Reduced glow intensity */
-            box-shadow: 0 0 30px rgba(255, 20, 147, 0.3), 0 0 60px rgba(255, 20, 147, 0.2);
-            /* Slower glow animation */
-            animation: glow 3s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            /* More subtle glow range */
-            0%, 100% { box-shadow: 0 0 30px rgba(255, 20, 147, 0.3), 0 0 60px rgba(255, 20, 147, 0.2); }
-            50% { box-shadow: 0 0 40px rgba(255, 20, 147, 0.4), 0 0 80px rgba(255, 20, 147, 0.3); }
-        }
-
-        .name {
-            font-size: 3rem;
-            margin-bottom: 2rem;
-            /* Reduced text glow */
-            text-shadow: 0 0 15px rgba(255, 20, 147, 0.4), 0 0 30px rgba(255, 20, 147, 0.3);
-        }
-
-        .badge {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 2rem;
-            /* More subtle badge glow */
-            filter: drop-shadow(0 0 8px rgba(255, 20, 147, 0.3));
-        }
-
-        .back-btn {
-            padding: 1rem 2rem;
-            /* Darker button background */
-            background: rgba(255, 20, 147, 0.3);
-            border: 1px solid rgba(255, 20, 147, 0.5);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            margin-top: 2rem;
-            transition: all 0.3s ease;
-            /* Reduced button glow */
+            border: 2px solid rgba(255, 20, 147, 0.4);
+            margin-bottom: 1.5rem;
             box-shadow: 0 0 15px rgba(255, 20, 147, 0.2);
         }
 
+        .name {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            color: #ff69b4;
+            text-shadow: 0 0 10px rgba(255, 20, 147, 0.3);
+        }
+
+        .badge {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 5px rgba(255, 20, 147, 0.2));
+        }
+
+        /* Volume control at bottom left */
+        .volume-control {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(20, 10, 15, 0.9);
+            padding: 10px 15px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 20, 147, 0.3);
+        }
+
+        .volume-btn {
+            background: none;
+            border: none;
+            color: #ff69b4;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 20, 147, 0.3);
+            outline: none;
+            border-radius: 2px;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #ff69b4;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .back-btn {
+            padding: 0.7rem 1.5rem;
+            background: rgba(255, 20, 147, 0.1);
+            color: #ff69b4;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 20, 147, 0.3);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            display: inline-block;
+        }
+
         .back-btn:hover {
-            background: rgba(255, 20, 147, 0.4);
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(255, 20, 147, 0.3);
+            background: rgba(255, 20, 147, 0.15);
+            border-color: rgba(255, 20, 147, 0.4);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="https://files.catbox.moe/wm9vex.webp" alt="grimjaydes" class="profile-img">
-        <div class="name">grimjaydes</div>
-        <img src="https://files.catbox.moe/mpczew.png" alt="badge" class="badge">
-        <a href="members.html" class="back-btn">← back to members</a>
+        <div class="profile-card">
+            <img src="https://files.catbox.moe/wm9vex.webp" alt="grimjaydes" class="profile-img">
+            <div class="name">grimjaydes</div>
+            <img src="https://files.catbox.moe/mpczew.png" alt="badge" class="badge">
+            <a href="members.html" class="back-btn">back</a>
+        </div>
     </div>
 
-    <audio autoplay loop>
+    <div class="volume-control">
+        <button class="volume-btn" id="muteBtn">🔊</button>
+        <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
+    </div>
+
+    <audio id="bgMusic" autoplay loop>
         <source src="https://files.catbox.moe/l49s3o.mp3" type="audio/mpeg">
     </audio>
+
+    <script>
+        // Volume control
+        const audio = document.getElementById('bgMusic');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const muteBtn = document.getElementById('muteBtn');
+        
+        audio.volume = 0.5;
+        
+        volumeSlider.addEventListener('input', (e) => {
+            audio.volume = e.target.value / 100;
+            muteBtn.textContent = audio.volume === 0 ? '🔇' : '🔊';
+        });
+        
+        muteBtn.addEventListener('click', () => {
+            if (audio.volume > 0) {
+                audio.volume = 0;
+                volumeSlider.value = 0;
+                muteBtn.textContent = '🔇';
+            } else {
+                audio.volume = 0.5;
+                volumeSlider.value = 50;
+                muteBtn.textContent = '🔊';
+            }
+        });
+    </script>
 </body>
 </html>
