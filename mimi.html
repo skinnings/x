@@ -1,65 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>mimi <3 </title>
-<style>
-body{margin:0;font-family:'Inter',Arial,sans-serif;background:#000;color:#fff;overflow:hidden}
-nav{position:fixed;top:0;width:100%;height:60px;background:#000;display:flex;align-items:center;padding:0 24px;gap:24px;z-index:10}
-.nav-title{font-weight:900;font-size:1.5rem;background:linear-gradient(90deg,#ff4b4b,#ff8a4b,#ffd54b,#a8ff4b,#4bffb0,#4bd2ff,#7a4bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 8s linear infinite}
-.nav-link{color:#fff;text-decoration:none;font-weight:600;transition:0.3s;text-shadow:0 0 2px #fff}
-.nav-link.active{color:#65c2d6;text-shadow:0 0 6px #65c2d6}
-@keyframes rainbow{0%{background-position:0%}100%{background-position:100%}}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mimi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.profile{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding-top:60px;text-align:center;position:relative;z-index:5}
-.profile img{width:180px;height:180px;border-radius:12px;margin-bottom:12px;object-fit:cover}
-.profile h1{font-size:2rem;margin-bottom:8px}
-.profile p{color:#ccc;font-size:1rem;margin-bottom:16px;text-shadow:0 0 6px rgba(255,255,255,0.05)}
-.badge{width:48px;height:48px;position:absolute;top:100px;right:50px}
+        body {
+            font-family: 'Arial', sans-serif;
+            /* Darker pink background for calm feel */
+            background: #1a0a0f;
+            background: linear-gradient(135deg, #1a0a0f 0%, #2a1520 100%);
+            min-height: 100vh;
+            /* Softer text color */
+            color: #e8d4dc;
+            overflow: hidden;
+            position: relative;
+        }
 
-/* Hearts effect */
-.heart{position:absolute;width:8px;height:8px;background:red;transform:rotate(45deg);animation:float 6s linear infinite;opacity:0.6;border-radius:2px}
-.heart::before,.heart::after{content:'';position:absolute;width:8px;height:8px;background:red;border-radius:2px}
-.heart::before{top:-4px;left:0}
-.heart::after{top:0;left:-4px}
-@keyframes float{0%{transform:translateY(0) translateX(0)}50%{transform:translateY(-50px) translateX(30px)}100%{transform:translateY(0) translateX(0)}}
-</style>
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            top: -10px;
+            font-size: 2rem;
+            /* More subtle pink hearts */
+            color: rgba(255, 182, 193, 0.3);
+            animation: float-hearts linear infinite;
+        }
+
+        @keyframes float-hearts {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            /* More subtle border */
+            border: 4px solid rgba(255, 182, 193, 0.4);
+            margin-bottom: 2rem;
+            /* Reduced glow */
+            box-shadow: 0 0 30px rgba(255, 182, 193, 0.2);
+        }
+
+        .name {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            /* Softer pink color */
+            color: #d4a4b4;
+            /* More subtle text shadow */
+            text-shadow: 0 0 15px rgba(255, 182, 193, 0.2);
+        }
+
+        .badge {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 2rem;
+            /* Reduced badge glow */
+            opacity: 0.8;
+        }
+
+        .back-btn {
+            padding: 1rem 2rem;
+            /* Darker, more subtle button */
+            background: rgba(255, 182, 193, 0.2);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            /* Softer text color */
+            color: #e8d4dc;
+            text-decoration: none;
+            border-radius: 50px;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 182, 193, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 182, 193, 0.2);
+        }
+    </style>
 </head>
 <body>
+    <div class="hearts" id="hearts"></div>
+    
+    <div class="container">
+        <img src="https://files.catbox.moe/tqlhda.webp" alt="mimi" class="profile-img">
+        <div class="name">mimi</div>
+        <img src="https://files.catbox.moe/osadpa.png" alt="badge" class="badge">
+        <a href="members.html" class="back-btn">← back to members</a>
+    </div>
 
-<nav>
-  <div class="nav-title">XXXX BEST FG</div>
-  <a href="index.html" class="nav-link" id="homeLink">Home</a>
-  <a href="members.html" class="nav-link" id="membersLink">Members</a>
-</nav>
+    <audio autoplay loop>
+        <source src="https://files.catbox.moe/jt9llz.mp3" type="audio/mpeg">
+    </audio>
 
-<div class="profile">
-  <img src="https://files.catbox.moe/tqlhda.webp" alt="mimi">
-  <img class="badge" src="https://files.catbox.moe/osadpa.png" alt="badge">
-  <h1>mimi</h1>
-  <p>Theme: Light Pink | Effect: Hearts</p>
-</div>
-
-<audio id="bgAudio" autoplay loop>
-  <source src="https://files.catbox.moe/jt9llz.mp3" type="audio/mp3">
-</audio>
-
-<script>
-const audio=document.getElementById('bgAudio');
-audio.volume=0.25;
-audio.currentTime=0;
-
-// Hearts effect
-for(let i=0;i<50;i++){
-  const h=document.createElement('div');
-  h.className='heart';
-  h.style.left=Math.random()*100+'%';
-  h.style.top=Math.random()*100+'%';
-  h.style.width=h.style.height=(Math.random()*6+4)+'px';
-  h.style.opacity=Math.random()*0.5+0.3;
-  document.body.appendChild(h);
-}
-</script>
+    <script>
+        // Generate hearts
+        const heartsContainer = document.getElementById('hearts');
+        for (let i = 0; i < 30; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '♡';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heartsContainer.appendChild(heart);
+        }
+    </script>
 </body>
 </html>
