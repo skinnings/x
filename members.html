@@ -9,23 +9,30 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            /* Disable text selection and context menu on members screen */
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
         }
 
+        /* Added fullscreen styling and removed scrollbars */
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
-            /* Updated to cleaner sans-serif font */
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #0a0a0a;
-            min-height: 100vh;
-            padding: 4rem 2rem;
             position: relative;
         }
 
-        /* Added rain effect */
+        /* Hide scrollbars completely */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
         .rain {
             position: absolute;
             width: 100%;
@@ -52,29 +59,31 @@
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
             z-index: 10;
         }
 
         .title {
+            position: absolute;
+            top: 3rem;
             text-align: center;
             font-size: 2rem;
             color: #e0e0e0;
-            margin-bottom: 4rem;
             letter-spacing: 2px;
             font-weight: 300;
         }
 
         .members-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, minmax(240px, 280px));
             gap: 2rem;
-            padding: 2rem 0;
         }
 
-        /* Updated card style to match reference with names */
         .member-card {
             background: rgba(20, 20, 20, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -100,7 +109,6 @@
             border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Added member name styling */
         .member-name {
             font-size: 1.3rem;
             color: #e0e0e0;
@@ -161,13 +169,14 @@
                 <a href="grimjaydes.html" class="view-profile-btn">view profile</a>
             </div>
 
-            <div class="member-card">
-                <img src="https://files.catbox.moe/d07g2i.webp" alt="miu" class="member-pfp">
-                <div class="member-name">miu</div>
-                <a href="miu.html" class="view-profile-btn">view profile</a>
-            </div>
+            <!-- Removed miu card -->
         </div>
     </div>
+
+    <!-- Members page music from entrance -->
+    <audio id="bgMusic" autoplay loop>
+        <source src="https://files.catbox.moe/iee12j.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         // Generate rain
