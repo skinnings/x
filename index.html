@@ -9,7 +9,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            /* Disable text selection and context menu */
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -27,13 +26,11 @@
             position: relative;
         }
 
-        /* Simplified entrance with no rain effect */
         .enter-container {
             text-align: center;
             z-index: 10;
         }
 
-        /* Simple, calm text styling */
         .enter-text {
             font-size: 1.5rem;
             color: #e0e0e0;
@@ -53,5 +50,22 @@
             <div class="enter-text">click to enter</div>
         </a>
     </div>
+
+    <!-- Added members page background music that starts when clicked -->
+    <audio id="membersMusic" preload="auto">
+        <source src="https://files.catbox.moe/iee12j.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Play music and navigate to members page
+        document.querySelector('.enter-container a').addEventListener('click', (e) => {
+            e.preventDefault();
+            const audio = document.getElementById('membersMusic');
+            audio.play();
+            setTimeout(() => {
+                window.location.href = 'members.html';
+            }, 100);
+        });
+    </script>
 </body>
 </html>
