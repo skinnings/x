@@ -9,10 +9,14 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            /* Disable text selection and context menu */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         body {
-            /* Terminal font and pure black background */
             font-family: 'Courier New', monospace;
             background: #000;
             min-height: 100vh;
@@ -21,6 +25,7 @@
             position: relative;
         }
 
+        /* Improved snow effect with realistic falling */
         .snow {
             position: absolute;
             width: 100%;
@@ -32,14 +37,15 @@
         .snowflake {
             position: absolute;
             top: -10px;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
             animation: fall linear infinite;
         }
 
         @keyframes fall {
             to {
-                transform: translateY(100vh);
+                transform: translateY(105vh) translateX(30px);
+                opacity: 0;
             }
         }
 
@@ -54,40 +60,52 @@
             padding: 2rem;
         }
 
-        /* Card-style profile container like reference */
+        /* Updated card layout with badge in gray box on top */
         .profile-card {
-            background: rgba(20, 20, 20, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 3rem 2.5rem;
+            background: rgba(15, 15, 15, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 0;
             text-align: center;
-            max-width: 400px;
+            max-width: 380px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Gray box at top for badge icon */
+        .badge-container {
+            background: rgba(50, 50, 50, 0.5);
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .badge {
+            width: 50px;
+            height: 50px;
+            opacity: 0.9;
+        }
+
+        /* Main content area with pfp and name */
+        .profile-content {
+            padding: 3rem 2.5rem;
         }
 
         .profile-img {
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 3px solid rgba(255, 255, 255, 0.3);
             margin-bottom: 1.5rem;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
         }
 
         .name {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
+            font-size: 2rem;
             letter-spacing: 2px;
             color: #e0e0e0;
         }
 
-        .badge {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        /* Volume control at bottom left like reference */
         .volume-control {
             position: fixed;
             bottom: 20px;
@@ -96,7 +114,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            background: rgba(20, 20, 20, 0.8);
+            background: rgba(20, 20, 20, 0.9);
             padding: 10px 15px;
             border-radius: 50px;
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -134,12 +152,12 @@
         }
 
         .back-btn {
-            padding: 0.7rem 1.5rem;
+            padding: 0.8rem 2rem;
             background: rgba(255, 255, 255, 0.05);
             color: #e0e0e0;
             text-decoration: none;
-            border-radius: 6px;
-            margin-top: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
             font-family: 'Courier New', monospace;
@@ -149,20 +167,24 @@
         }
 
         .back-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.3);
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
     <div class="snow" id="snow"></div>
     
     <div class="container">
         <div class="profile-card">
-            <img src="https://files.catbox.moe/gvdo4e.jpg" alt="skin" class="profile-img">
-            <div class="name">skin</div>
-            <img src="https://files.catbox.moe/28gp36.png" alt="badge" class="badge">
-            <a href="members.html" class="back-btn">back</a>
+            <div class="badge-container">
+                <img src="https://files.catbox.moe/28gp36.png" alt="badge" class="badge">
+            </div>
+            <div class="profile-content">
+                <img src="https://files.catbox.moe/gvdo4e.jpg" alt="skin" class="profile-img">
+                <div class="name">skin</div>
+                <a href="members.html" class="back-btn">← back to members</a>
+            </div>
         </div>
     </div>
 
@@ -176,16 +198,16 @@
     </audio>
 
     <script>
-        // Generate snow
         const snowContainer = document.getElementById('snow');
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 60; i++) {
             const snowflake = document.createElement('div');
             snowflake.className = 'snowflake';
             snowflake.textContent = '❄';
             snowflake.style.left = Math.random() * 100 + '%';
-            snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            snowflake.style.fontSize = (Math.random() * 0.5 + 0.8) + 'rem';
+            snowflake.style.animationDuration = (Math.random() * 3 + 4) + 's';
             snowflake.style.animationDelay = Math.random() * 5 + 's';
-            snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+            snowflake.style.opacity = Math.random() * 0.6 + 0.4;
             snowContainer.appendChild(snowflake);
         }
 
@@ -210,6 +232,13 @@
                 audio.volume = 0.5;
                 volumeSlider.value = 50;
                 muteBtn.textContent = '🔊';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                (e.ctrlKey && e.shiftKey && e.key === 'J') || (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
             }
         });
     </script>
