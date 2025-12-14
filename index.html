@@ -12,8 +12,9 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: #0a0a0f;
+            /* Using monospace font for terminal aesthetic */
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,103 +23,84 @@
             position: relative;
         }
 
-        .stars {
+        /* Added subtle rain effect for calm atmosphere */
+        .rain {
             position: absolute;
             width: 100%;
             height: 100%;
             pointer-events: none;
+            z-index: 1;
         }
 
-        .star {
+        .raindrop {
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 4s infinite;
+            top: -10px;
+            width: 1px;
+            height: 30px;
+            background: linear-gradient(transparent, rgba(255, 255, 255, 0.1));
+            animation: rain linear infinite;
         }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.6; }
+        @keyframes rain {
+            to {
+                transform: translateY(100vh);
+            }
         }
 
         .enter-container {
             text-align: center;
             z-index: 10;
-            animation: float 4s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        /* Terminal-style text with minimal glow */
+        .title {
+            font-size: 2rem;
+            color: #e0e0e0;
+            margin-bottom: 3rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
         }
 
-        .angel-text {
-            font-size: 4rem;
-            color: #e8e8e8;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3),
-                         0 0 30px rgba(255, 255, 255, 0.2);
-            margin-bottom: 2rem;
-            font-weight: bold;
-        }
-
+        /* Minimal card design like the reference image */
         .enter-btn {
-            padding: 1.5rem 4rem;
-            font-size: 1.5rem;
+            padding: 1rem 3rem;
+            font-size: 1rem;
             background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: #e8e8e8;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e0e0e0;
             cursor: pointer;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            border-radius: 8px;
             text-decoration: none;
             display: inline-block;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
         }
 
         .enter-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
-        }
-
-        .glow {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            animation: pulse 6s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.2; }
-            50% { transform: scale(1.3); opacity: 0.4; }
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
         }
     </style>
 </head>
 <body>
-    <div class="stars" id="stars"></div>
-    <div class="glow"></div>
+    <div class="rain" id="rain"></div>
     
     <div class="enter-container">
-        <div class="angel-text">✧ xxxx ✧</div>
-        <a href="members.html" class="enter-btn">ENTER</a>
+        <div class="title">xxxx</div>
+        <a href="members.html" class="enter-btn">click to enter</a>
     </div>
 
     <script>
-        // Generate stars
-        const starsContainer = document.getElementById('stars');
-        for (let i = 0; i < 100; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.animationDelay = Math.random() * 3 + 's';
-            starsContainer.appendChild(star);
+        // Generate rain
+        const rainContainer = document.getElementById('rain');
+        for (let i = 0; i < 80; i++) {
+            const raindrop = document.createElement('div');
+            raindrop.className = 'raindrop';
+            raindrop.style.left = Math.random() * 100 + '%';
+            raindrop.style.animationDuration = (Math.random() * 1 + 0.8) + 's';
+            raindrop.style.animationDelay = Math.random() * 2 + 's';
+            rainContainer.appendChild(raindrop);
         }
     </script>
 </body>
