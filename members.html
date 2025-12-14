@@ -9,11 +9,16 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            /* Disable text selection and context menu on members screen */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         body {
-            /* Terminal font and dark background */
-            font-family: 'Courier New', monospace;
+            /* Updated to cleaner sans-serif font */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #0a0a0a;
             min-height: 100vh;
             padding: 4rem 2rem;
@@ -59,6 +64,7 @@
             color: #e0e0e0;
             margin-bottom: 4rem;
             letter-spacing: 2px;
+            font-weight: 300;
         }
 
         .members-grid {
@@ -68,19 +74,21 @@
             padding: 2rem 0;
         }
 
-        /* Card style matching reference image */
+        /* Updated card style to match reference with names */
         .member-card {
-            background: rgba(20, 20, 20, 0.8);
+            background: rgba(20, 20, 20, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 12px;
             padding: 2.5rem 2rem;
             text-align: center;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .member-card:hover {
             border-color: rgba(255, 255, 255, 0.25);
-            background: rgba(25, 25, 25, 0.9);
+            background: rgba(25, 25, 25, 0.95);
+            transform: translateY(-4px);
         }
 
         .member-pfp {
@@ -92,20 +100,28 @@
             border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Terminal-style button */
+        /* Added member name styling */
+        .member-name {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            margin-bottom: 1.2rem;
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+
         .view-profile-btn {
             padding: 0.6rem 1.5rem;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 6px;
             color: #e0e0e0;
-            font-family: 'Courier New', monospace;
             font-size: 0.9rem;
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
             transition: all 0.3s ease;
             letter-spacing: 1px;
+            font-weight: 300;
         }
 
         .view-profile-btn:hover {
@@ -114,35 +130,40 @@
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
     <div class="rain" id="rain"></div>
     
     <div class="container">
         <h1 class="title">members</h1>
         
-        <div class="members-grid">
+        <div class="members-grid" id="membersGrid">
             <div class="member-card">
                 <img src="https://files.catbox.moe/gvdo4e.jpg" alt="skin" class="member-pfp">
+                <div class="member-name">skin</div>
                 <a href="skin.html" class="view-profile-btn">view profile</a>
             </div>
 
             <div class="member-card">
                 <img src="https://files.catbox.moe/q7dy8o.webp" alt="bully" class="member-pfp">
+                <div class="member-name">bully</div>
                 <a href="bully.html" class="view-profile-btn">view profile</a>
             </div>
 
             <div class="member-card">
                 <img src="https://files.catbox.moe/tqlhda.webp" alt="mimi" class="member-pfp">
+                <div class="member-name">mimi</div>
                 <a href="mimi.html" class="view-profile-btn">view profile</a>
             </div>
 
             <div class="member-card">
                 <img src="https://files.catbox.moe/wm9vex.webp" alt="grimjaydes" class="member-pfp">
+                <div class="member-name">grimjaydes</div>
                 <a href="grimjaydes.html" class="view-profile-btn">view profile</a>
             </div>
 
             <div class="member-card">
                 <img src="https://files.catbox.moe/d07g2i.webp" alt="miu" class="member-pfp">
+                <div class="member-name">miu</div>
                 <a href="miu.html" class="view-profile-btn">view profile</a>
             </div>
         </div>
@@ -159,6 +180,42 @@
             raindrop.style.animationDelay = Math.random() * 2 + 's';
             rainContainer.appendChild(raindrop);
         }
+
+        const membersGrid = document.getElementById('membersGrid');
+        const cards = document.querySelectorAll('.member-card');
+
+        membersGrid.addEventListener('mousemove', (e) => {
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const cardCenterX = rect.left + rect.width / 2;
+                const cardCenterY = rect.top + rect.height / 2;
+                const distanceX = e.clientX - cardCenterX;
+                const distanceY = e.clientY - cardCenterY;
+                const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+                
+                if (distance < 200) {
+                    const intensity = (200 - distance) / 200;
+                    const shakeX = (Math.random() - 0.5) * intensity * 4;
+                    const shakeY = (Math.random() - 0.5) * intensity * 4;
+                    card.style.transform = `translate(${shakeX}px, ${shakeY}px)`;
+                } else {
+                    card.style.transform = 'translate(0, 0)';
+                }
+            });
+        });
+
+        membersGrid.addEventListener('mouseleave', () => {
+            cards.forEach(card => {
+                card.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                (e.ctrlKey && e.shiftKey && e.key === 'J') || (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
+            }
+        });
     </script>
 </body>
 </html>
