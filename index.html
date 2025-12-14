@@ -1,74 +1,114 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>XXXX BEST FG — Home</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>xxxx</title>
+
 <style>
-/* Fonts & reset */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;font-family:'Inter',Arial,sans-serif;background:#000;color:#fff;overflow-x:hidden;position:relative}
+:root{
+  --rainbow: linear-gradient(90deg,#ff6b6b,#ffd166,#8bd19b,#6fd3ff,#b58ff9,#ff6b6b);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#000;color:#fff;font-family:Inter,system-ui,sans-serif;scroll-behavior:smooth}
 
-/* Navbar */
-nav{position:fixed;top:0;left:0;width:100%;height:60px;background:#000;display:flex;align-items:center;padding:0 24px;gap:24px;z-index:10}
-.nav-title{font-weight:900;font-size:1.5rem;background:linear-gradient(90deg,#ff4b4b,#ff8a4b,#ffd54b,#a8ff4b,#4bffb0,#4bd2ff,#7a4bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 8s linear infinite}
-.nav-link{color:#fff;text-decoration:none;font-weight:600;transition:0.3s;text-shadow:0 0 2px #fff}
-.nav-link.active{color:#65c2d6;text-shadow:0 0 6px #65c2d6}
-@keyframes rainbow{0%{background-position:0%}100%{background-position:100%}}
+/* ---------- Ambient Grain + Vignette ---------- */
+#grain{pointer-events:none;position:fixed;inset:0;z-index:2;opacity:.08;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)"/></svg>');mix-blend-mode:overlay}
+#vignette{pointer-events:none;position:fixed;inset:0;z-index:3;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%)}
 
-/* Intro Screen */
-#intro{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;cursor:pointer}
-#intro h1{font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;color:#fff;text-shadow:0 0 20px rgba(255,255,255,0.1);letter-spacing:2px;background:linear-gradient(90deg,#ff4b4b,#ff8a4b,#ffd54b,#a8ff4b,#4bffb0,#4bd2ff,#7a4bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 8s linear infinite}
-#intro p{margin-top:16px;font-size:1.25rem;color:#ccc;text-shadow:0 0 6px rgba(255,255,255,0.1)}
+/* ---------- Intro (Cleaner) ---------- */
+#intro{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;z-index:10;transition:opacity .8s ease}
+#intro.hidden{opacity:0;pointer-events:none}
+#enter{font-family:Georgia,serif;font-size:48px;letter-spacing:2px;cursor:pointer;position:relative}
+#enter span{background:var(--rainbow);background-size:200%;-webkit-background-clip:text;color:transparent;animation:rb 6s linear infinite}
+#enter::after{content:"";position:absolute;inset:-30px;background:var(--rainbow);filter:blur(80px);opacity:.12;z-index:-1}
 
-/* HOME content */
-#home{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding-top:60px;text-align:center;position:relative;z-index:5}
-#home h1{font-size:1.5rem;font-weight:400;color:#fff;text-shadow:0 0 10px rgba(255,255,255,0.1),0 0 20px rgba(101,194,214,0.1);max-width:800px;line-height:1.4}
-#home p{margin-top:12px;font-size:1rem;color:#ccc;text-shadow:0 0 6px rgba(255,255,255,0.05)}
+/* particles (minimal) */
+.p{position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.12);animation:flt linear infinite}
+@keyframes flt{from{transform:translateY(0);opacity:.5}to{transform:translateY(180px);opacity:0}}
 
-/* Floating Particles */
-.particle{position:absolute;background:rgba(255,255,255,0.03);border-radius:50%;animation:float 20s linear infinite;pointer-events:none;z-index:1}
-@keyframes float{0%{transform:translateY(0) translateX(0)}50%{transform:translateY(-50px) translateX(30px)}100%{transform:translateY(0) translateX(0)}}
+/* ---------- Nav ---------- */
+nav{position:sticky;top:12px;margin:12px auto;width:min(1100px,94%);padding:12px 18px;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border-radius:14px;backdrop-filter:blur(10px);z-index:5}
+.logo{font-weight:900;letter-spacing:2px;background:var(--rainbow);background-size:200%;-webkit-background-clip:text;color:transparent;animation:rb 6s linear infinite}
+nav a{color:rgba(255,255,255,.7);margin-left:14px;text-decoration:none}
+nav a:hover{color:#fff}
+
+/* ---------- Sections ---------- */
+section{min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column}
+#home{color:rgba(255,255,255,.6);font-size:14px;text-align:center}
+#members h1,#profiles h1{margin-bottom:40px;background:var(--rainbow);background-size:200%;-webkit-background-clip:text;color:transparent;animation:rb 6s linear infinite}
+
+/* ---------- Members Grid ---------- */
+.grid{width:min(1000px,94%);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px}
+.card{background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.05);border-radius:16px;padding:22px;text-align:center;backdrop-filter:blur(6px);animation:drift 10s ease-in-out infinite;transition:transform .6s ease;cursor:pointer}
+.card:hover{transform:translateY(-10px)}
+@keyframes drift{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+.pfp{width:110px;height:110px;border-radius:14px;background-size:cover;background-position:center;margin:auto;margin-bottom:14px}
+.name{font-weight:600;letter-spacing:.5px}
+
+/* ---------- Profile Sections (All On One Page) ---------- */
+.profile{width:min(900px,94%);margin-bottom:60px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:32px;backdrop-filter:blur(10px)}
+.profile .pfp{width:140px;height:140px}
+.profile h2{margin:16px 0 6px}
+.profile p{color:rgba(255,255,255,.65)}
+
+@keyframes rb{0%{background-position:0%}100%{background-position:200%}}
+audio{display:none}
 </style>
 </head>
 <body>
 
-<!-- Intro -->
 <div id="intro">
-  <h1>Enter Heaven</h1>
-  <p>Click to enter</p>
+  <div id="enter"><span>enter heaven</span></div>
 </div>
+<div id="grain"></div><div id="vignette"></div>
+<audio id="music" src="https://files.catbox.moe/ho62vm.mp3"></audio>
 
-<!-- Navbar -->
 <nav>
-  <div class="nav-title">XXXX BEST FG</div>
-  <a href="index.html" class="nav-link active" id="homeLink">Home</a>
-  <a href="members.html" class="nav-link" id="membersLink">Members</a>
+  <div class="logo">XXXX BEST FG</div>
+  <div>
+    <a href="#home">Home</a>
+    <a href="#members">Members</a>
+  </div>
 </nav>
 
-<!-- HOME -->
-<div id="home">
-  <h1>© 2025 — This website serves as a biosite for all members of the FG xxxx</h1>
-  <p>Navigate to the Members page to explore each profile.</p>
-</div>
+<section id="home">
+  © 2025 — This website serves as a biosite for all members of the fg xxxx
+</section>
 
-<!-- Music -->
-<audio id="bgAudio" autoplay loop></audio>
+<section id="members">
+  <h1>xxxx — Members</h1>
+  <div class="grid">
+    <div class="card" onclick="go('skin')"><div class="pfp" style="background-image:url('https://files.catbox.moe/gvdo4e.jpg')"></div><div class="name">skin</div></div>
+    <div class="card" onclick="go('bully')"><div class="pfp" style="background-image:url('https://files.catbox.moe/q7dy8o.webp')"></div><div class="name">bully</div></div>
+    <div class="card" onclick="go('mimi')"><div class="pfp" style="background-image:url('https://files.catbox.moe/tqlhda.webp')"></div><div class="name">mimi</div></div>
+    <div class="card" onclick="go('miu')"><div class="pfp" style="background-image:url('https://files.catbox.moe/d07g2i.webp')"></div><div class="name">miu</div></div>
+    <div class="card" onclick="go('grimjaydes')"><div class="pfp" style="background-image:url('https://files.catbox.moe/wm9vex.webp')"></div><div class="name">grimjaydes</div></div>
+  </div>
+</section>
+
+<section id="profiles">
+  <h1>Profiles</h1>
+  <div id="skin" class="profile"><div class="pfp" style="background-image:url('https://files.catbox.moe/gvdo4e.jpg')"></div><h2>skin</h2><p>Profile content coming soon.</p></div>
+  <div id="bully" class="profile"><div class="pfp" style="background-image:url('https://files.catbox.moe/q7dy8o.webp')"></div><h2>bully</h2><p>Profile content coming soon.</p></div>
+  <div id="mimi" class="profile"><div class="pfp" style="background-image:url('https://files.catbox.moe/tqlhda.webp')"></div><h2>mimi</h2><p>Profile content coming soon.</p></div>
+  <div id="miu" class="profile"><div class="pfp" style="background-image:url('https://files.catbox.moe/d07g2i.webp')"></div><h2>miu</h2><p>Profile content coming soon.</p></div>
+  <div id="grimjaydes" class="profile"><div class="pfp" style="background-image:url('https://files.catbox.moe/wm9vex.webp')"></div><h2>grimjaydes</h2><p>Profile content coming soon.</p></div>
+</section>
 
 <script>
-const intro=document.getElementById('intro');
-const home=document.getElementById('home');
-const bgAudio=document.getElementById('bgAudio');
+// particles
+for(let i=0;i<20;i++){const p=document.createElement('div');p.className='p';p.style.left=Math.random()*100+'%';p.style.top=Math.random()*100+'%';p.style.animationDuration=6+Math.random()*10+'s';intro.appendChild(p)}
 
-intro.addEventListener('click',()=>{
-  intro.style.display='none';
-  home.style.display='flex';
-  bgAudio.src='https://files.catbox.moe/613c48.mp3';
-  bgAudio.currentTime=0;
-  bgAudio.volume=0.25;
-  bgAudio.play();
-});
+// enter + keyboard + iOS autoplay-safe
+const intro=document.getElementById('intro');const music=document.getElementById('music');
+function enterSite(){music.currentTime=0;music.play().catch(()=>{});intro.classList.add('hidden')}
+document.getElementById('enter').onclick=enterSite;document.addEventListener('keydown',e=>{if(e.key==='Enter')enterSite()});
+
+// card navigation
+function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
 </script>
 </body>
 </html>
+```
