@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xxxx - Members</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            /* Dark calm background instead of bright gradient */
+            background: #0f0f14;
+            min-height: 100vh;
+            padding: 4rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 3rem;
+            /* Softer white color */
+            color: #e8e8e8;
+            margin-bottom: 4rem;
+            /* Reduced text shadow intensity */
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .member-card {
+            /* Darker, more subtle card background */
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            /* More subtle hover shadow */
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .member-pfp {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            /* Softer border color */
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            /* Reduced glow */
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .view-profile-btn {
+            padding: 0.8rem 2rem;
+            /* Subtle dark button instead of bright white */
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            /* Softer text color */
+            color: #e8e8e8;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .view-profile-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title"> MEMBERS </h1>
+        
+        <div class="members-grid">
+            <div class="member-card">
+                <img src="https://files.catbox.moe/gvdo4e.jpg" alt="skin" class="member-pfp">
+                <a href="skin.html" class="view-profile-btn">view profile</a>
+            </div>
+
+            <div class="member-card">
+                <img src="https://files.catbox.moe/q7dy8o.webp" alt="bully" class="member-pfp">
+                <a href="bully.html" class="view-profile-btn">view profile</a>
+            </div>
+
+            <div class="member-card">
+                <img src="https://files.catbox.moe/tqlhda.webp" alt="mimi" class="member-pfp">
+                <a href="mimi.html" class="view-profile-btn">view profile</a>
+            </div>
+
+            <div class="member-card">
+                <img src="https://files.catbox.moe/wm9vex.webp" alt="grimjaydes" class="member-pfp">
+                <a href="grimjaydes.html" class="view-profile-btn">view profile</a>
+            </div>
+
+            <div class="member-card">
+                <img src="https://files.catbox.moe/d07g2i.webp" alt="miu" class="member-pfp">
+                <a href="miu.html" class="view-profile-btn">view profile</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
