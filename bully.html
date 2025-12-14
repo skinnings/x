@@ -9,6 +9,11 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            /* Disable text selection and context menu */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         body {
@@ -20,6 +25,7 @@
             position: relative;
         }
 
+        /* Improved rain effect with realistic falling */
         .rain {
             position: absolute;
             width: 100%;
@@ -31,15 +37,16 @@
         .raindrop {
             position: absolute;
             top: -10px;
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(transparent, rgba(255, 255, 255, 0.3));
+            width: 2px;
+            height: 50px;
+            background: linear-gradient(transparent, rgba(135, 206, 250, 0.6), transparent);
             animation: rain linear infinite;
         }
 
         @keyframes rain {
             to {
-                transform: translateY(100vh);
+                transform: translateY(105vh);
+                opacity: 0;
             }
         }
 
@@ -54,36 +61,50 @@
             padding: 2rem;
         }
 
+        /* Updated card layout with badge in gray box on top */
         .profile-card {
-            background: rgba(20, 20, 20, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 3rem 2.5rem;
+            background: rgba(15, 15, 15, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 0;
             text-align: center;
-            max-width: 400px;
+            max-width: 380px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            margin-bottom: 1.5rem;
-        }
-
-        .name {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            letter-spacing: 2px;
-            color: #e0e0e0;
+        /* Gray box at top for badge icon */
+        .badge-container {
+            background: rgba(50, 50, 50, 0.5);
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .badge {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 2rem;
+            width: 50px;
+            height: 50px;
             opacity: 0.9;
+        }
+
+        /* Main content area with pfp and name */
+        .profile-content {
+            padding: 3rem 2.5rem;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .name {
+            font-size: 2rem;
+            letter-spacing: 2px;
+            color: #e0e0e0;
         }
 
         .volume-control {
@@ -94,7 +115,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            background: rgba(20, 20, 20, 0.8);
+            background: rgba(20, 20, 20, 0.9);
             padding: 10px 15px;
             border-radius: 50px;
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -132,12 +153,12 @@
         }
 
         .back-btn {
-            padding: 0.7rem 1.5rem;
+            padding: 0.8rem 2rem;
             background: rgba(255, 255, 255, 0.05);
             color: #e0e0e0;
             text-decoration: none;
-            border-radius: 6px;
-            margin-top: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
             font-family: 'Courier New', monospace;
@@ -147,20 +168,24 @@
         }
 
         .back-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.3);
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
     <div class="rain" id="rain"></div>
     
     <div class="container">
         <div class="profile-card">
-            <img src="https://files.catbox.moe/q7dy8o.webp" alt="bully" class="profile-img">
-            <div class="name">bully</div>
-            <img src="https://files.catbox.moe/dxj7nl.png" alt="badge" class="badge">
-            <a href="members.html" class="back-btn">back</a>
+            <div class="badge-container">
+                <img src="https://files.catbox.moe/dxj7nl.png" alt="badge" class="badge">
+            </div>
+            <div class="profile-content">
+                <img src="https://files.catbox.moe/q7dy8o.webp" alt="bully" class="profile-img">
+                <div class="name">bully</div>
+                <a href="members.html" class="back-btn">← back to members</a>
+            </div>
         </div>
     </div>
 
@@ -174,14 +199,14 @@
     </audio>
 
     <script>
-        // Generate rain
         const rainContainer = document.getElementById('rain');
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 120; i++) {
             const raindrop = document.createElement('div');
             raindrop.className = 'raindrop';
             raindrop.style.left = Math.random() * 100 + '%';
-            raindrop.style.animationDuration = (Math.random() * 0.5 + 0.5) + 's';
+            raindrop.style.animationDuration = (Math.random() * 0.4 + 0.5) + 's';
             raindrop.style.animationDelay = Math.random() * 2 + 's';
+            raindrop.style.opacity = Math.random() * 0.3 + 0.4;
             rainContainer.appendChild(raindrop);
         }
 
@@ -206,6 +231,13 @@
                 audio.volume = 0.5;
                 volumeSlider.value = 50;
                 muteBtn.textContent = '🔊';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                (e.ctrlKey && e.shiftKey && e.key === 'J') || (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
             }
         });
     </script>
