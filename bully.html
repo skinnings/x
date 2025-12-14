@@ -17,7 +17,7 @@
         }
 
         body {
-            font-family: 'Courier New', monospace;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #000;
             min-height: 100vh;
             color: #e0e0e0;
@@ -36,17 +36,21 @@
 
         .raindrop {
             position: absolute;
-            top: -10px;
-            width: 2px;
-            height: 50px;
-            background: linear-gradient(transparent, rgba(135, 206, 250, 0.6), transparent);
-            animation: rain linear infinite;
+            top: -50px;
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(transparent, rgba(174, 194, 224, 0.8), transparent);
+            animation: rainfall linear infinite;
         }
 
-        @keyframes rain {
-            to {
-                transform: translateY(105vh);
-                opacity: 0;
+        @keyframes rainfall {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0.5;
             }
         }
 
@@ -66,29 +70,36 @@
             background: rgba(15, 15, 15, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 16px;
-            padding: 0;
+            padding: 3rem 2.5rem;
             text-align: center;
-            max-width: 380px;
+            max-width: 420px;
             overflow: hidden;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
         /* Gray box at top for badge icon */
-        .badge-container {
-            background: rgba(50, 50, 50, 0.5);
-            padding: 1.5rem;
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .badge {
-            width: 50px;
-            height: 50px;
-            opacity: 0.9;
+        .badge-icon {
+            width: 24px;
+            height: 24px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
         }
 
-        /* Main content area with pfp and name */
+        .badge-icon:hover {
+            opacity: 1;
+        }
+
         .profile-content {
-            padding: 3rem 2.5rem;
+            padding: 0;
         }
 
         .profile-img {
@@ -105,6 +116,23 @@
             font-size: 2rem;
             letter-spacing: 2px;
             color: #e0e0e0;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .view-counter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .eye-icon {
+            width: 16px;
+            height: 16px;
         }
 
         .volume-control {
@@ -121,15 +149,11 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        .volume-btn {
-            background: none;
-            border: none;
-            color: #e0e0e0;
+        .volume-icon {
+            width: 20px;
+            height: 20px;
+            fill: #e0e0e0;
             cursor: pointer;
-            font-size: 1.2rem;
-            padding: 0;
-            display: flex;
-            align-items: center;
         }
 
         .volume-slider {
@@ -158,13 +182,13 @@
             color: #e0e0e0;
             text-decoration: none;
             border-radius: 8px;
-            margin-top: 2rem;
+            margin-top: 1rem;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            font-family: 'Courier New', monospace;
             font-size: 0.9rem;
             letter-spacing: 1px;
             display: inline-block;
+            font-weight: 300;
         }
 
         .back-btn:hover {
@@ -178,19 +202,29 @@
     
     <div class="container">
         <div class="profile-card">
-            <div class="badge-container">
-                <img src="https://files.catbox.moe/dxj7nl.png" alt="badge" class="badge">
+            <div class="badges">
+                <img src="https://files.catbox.moe/dxj7nl.png" alt="badge" class="badge-icon">
             </div>
             <div class="profile-content">
                 <img src="https://files.catbox.moe/q7dy8o.webp" alt="bully" class="profile-img">
                 <div class="name">bully</div>
+                <div class="view-counter">
+                    <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <span id="viewCount">0</span>
+                </div>
                 <a href="members.html" class="back-btn">← back to members</a>
             </div>
         </div>
     </div>
 
     <div class="volume-control">
-        <button class="volume-btn" id="muteBtn">🔊</button>
+        <svg class="volume-icon" id="muteBtn" viewBox="0 0 24 24">
+            <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
         <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
     </div>
 
@@ -199,16 +233,20 @@
     </audio>
 
     <script>
+        // Realistic rain generation
         const rainContainer = document.getElementById('rain');
-        for (let i = 0; i < 120; i++) {
+        for (let i = 0; i < 150; i++) {
             const raindrop = document.createElement('div');
             raindrop.className = 'raindrop';
             raindrop.style.left = Math.random() * 100 + '%';
-            raindrop.style.animationDuration = (Math.random() * 0.4 + 0.5) + 's';
+            raindrop.style.animationDuration = (Math.random() * 0.3 + 0.4) + 's';
             raindrop.style.animationDelay = Math.random() * 2 + 's';
-            raindrop.style.opacity = Math.random() * 0.3 + 0.4;
             rainContainer.appendChild(raindrop);
         }
+
+        // View counter
+        let views = Math.floor(Math.random() * 1000) + 100;
+        document.getElementById('viewCount').textContent = views;
 
         // Volume control
         const audio = document.getElementById('bgMusic');
@@ -219,18 +257,15 @@
         
         volumeSlider.addEventListener('input', (e) => {
             audio.volume = e.target.value / 100;
-            muteBtn.textContent = audio.volume === 0 ? '🔇' : '🔊';
         });
         
         muteBtn.addEventListener('click', () => {
             if (audio.volume > 0) {
                 audio.volume = 0;
                 volumeSlider.value = 0;
-                muteBtn.textContent = '🔇';
             } else {
                 audio.volume = 0.5;
                 volumeSlider.value = 50;
-                muteBtn.textContent = '🔊';
             }
         });
 
