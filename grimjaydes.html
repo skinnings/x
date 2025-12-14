@@ -9,10 +9,14 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            /* Disable text selection and context menu */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         body {
-            /* Terminal font and pure black background */
             font-family: 'Courier New', monospace;
             background: #000;
             min-height: 100vh;
@@ -21,7 +25,6 @@
             position: relative;
         }
 
-        /* More subtle neon pink background glow */
         body::before {
             content: '';
             position: absolute;
@@ -42,44 +45,54 @@
             padding: 2rem;
         }
 
-        /* Card-style profile container matching terminal aesthetic */
+        /* Updated card layout with badge in gray box on top */
         .profile-card {
-            background: rgba(20, 10, 15, 0.9);
-            border: 1px solid rgba(255, 20, 147, 0.3);
-            border-radius: 12px;
-            padding: 3rem 2.5rem;
+            background: rgba(15, 8, 12, 0.95);
+            border: 1px solid rgba(255, 20, 147, 0.4);
+            border-radius: 16px;
+            padding: 0;
             text-align: center;
-            max-width: 400px;
-            box-shadow: 0 0 20px rgba(255, 20, 147, 0.1);
+            max-width: 380px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(255, 20, 147, 0.15);
         }
 
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255, 20, 147, 0.4);
-            margin-bottom: 1.5rem;
-            box-shadow: 0 0 15px rgba(255, 20, 147, 0.2);
-        }
-
-        .name {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            letter-spacing: 2px;
-            color: #ff69b4;
-            text-shadow: 0 0 10px rgba(255, 20, 147, 0.3);
+        /* Gray box at top for badge icon */
+        .badge-container {
+            background: rgba(60, 30, 45, 0.5);
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 20, 147, 0.2);
         }
 
         .badge {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 2rem;
+            width: 50px;
+            height: 50px;
             opacity: 0.9;
-            filter: drop-shadow(0 0 5px rgba(255, 20, 147, 0.2));
+            filter: drop-shadow(0 0 5px rgba(255, 20, 147, 0.3));
         }
 
-        /* Volume control at bottom left */
+        /* Main content area with pfp and name */
+        .profile-content {
+            padding: 3rem 2.5rem;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 20, 147, 0.5);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 25px rgba(255, 20, 147, 0.3);
+        }
+
+        .name {
+            font-size: 2rem;
+            letter-spacing: 2px;
+            color: #ff69b4;
+            text-shadow: 0 0 10px rgba(255, 20, 147, 0.4);
+        }
+
         .volume-control {
             position: fixed;
             bottom: 20px;
@@ -126,14 +139,14 @@
         }
 
         .back-btn {
-            padding: 0.7rem 1.5rem;
+            padding: 0.8rem 2rem;
             background: rgba(255, 20, 147, 0.1);
             color: #ff69b4;
             text-decoration: none;
-            border-radius: 6px;
-            margin-top: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 20, 147, 0.3);
+            border: 1px solid rgba(255, 20, 147, 0.4);
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
             letter-spacing: 1px;
@@ -141,18 +154,22 @@
         }
 
         .back-btn:hover {
-            background: rgba(255, 20, 147, 0.15);
-            border-color: rgba(255, 20, 147, 0.4);
+            background: rgba(255, 20, 147, 0.2);
+            border-color: rgba(255, 20, 147, 0.5);
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
     <div class="container">
         <div class="profile-card">
-            <img src="https://files.catbox.moe/wm9vex.webp" alt="grimjaydes" class="profile-img">
-            <div class="name">grimjaydes</div>
-            <img src="https://files.catbox.moe/mpczew.png" alt="badge" class="badge">
-            <a href="members.html" class="back-btn">back</a>
+            <div class="badge-container">
+                <img src="https://files.catbox.moe/mpczew.png" alt="badge" class="badge">
+            </div>
+            <div class="profile-content">
+                <img src="https://files.catbox.moe/wm9vex.webp" alt="grimjaydes" class="profile-img">
+                <div class="name">grimjaydes</div>
+                <a href="members.html" class="back-btn">← back to members</a>
+            </div>
         </div>
     </div>
 
@@ -187,6 +204,13 @@
                 audio.volume = 0.5;
                 volumeSlider.value = 50;
                 muteBtn.textContent = '🔊';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                (e.ctrlKey && e.shiftKey && e.key === 'J') || (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
             }
         });
     </script>
