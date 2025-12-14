@@ -12,10 +12,10 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Courier New', monospace;
             background: #000;
             min-height: 100vh;
-            color: white;
+            color: #e0e0e0;
             overflow: hidden;
             position: relative;
         }
@@ -31,9 +31,9 @@
         .raindrop {
             position: absolute;
             top: -10px;
-            width: 2px;
-            height: 50px;
-            background: linear-gradient(transparent, rgba(255, 255, 255, 0.6));
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(transparent, rgba(255, 255, 255, 0.3));
             animation: rain linear infinite;
         }
 
@@ -54,41 +54,101 @@
             padding: 2rem;
         }
 
+        .profile-card {
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            max-width: 400px;
+        }
+
         .profile-img {
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid white;
-            margin-bottom: 2rem;
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 1.5rem;
         }
 
         .name {
-            font-size: 3rem;
-            margin-bottom: 2rem;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            color: #e0e0e0;
         }
 
         .badge {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .volume-control {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(20, 20, 20, 0.8);
+            padding: 10px 15px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .volume-btn {
+            background: none;
+            border: none;
+            color: #e0e0e0;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            border-radius: 2px;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #e0e0e0;
+            cursor: pointer;
+            border-radius: 50%;
         }
 
         .back-btn {
-            padding: 1rem 2rem;
-            background: white;
-            color: black;
+            padding: 0.7rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            color: #e0e0e0;
             text-decoration: none;
-            border-radius: 50px;
-            margin-top: 2rem;
+            border-radius: 6px;
+            margin-top: 1.5rem;
             transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            display: inline-block;
         }
 
         .back-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
         }
     </style>
 </head>
@@ -96,13 +156,20 @@
     <div class="rain" id="rain"></div>
     
     <div class="container">
-        <img src="https://files.catbox.moe/q7dy8o.webp" alt="bully" class="profile-img">
-        <div class="name">bully</div>
-        <img src="https://files.catbox.moe/dxj7nl.png" alt="badge" class="badge">
-        <a href="members.html" class="back-btn">← back to members</a>
+        <div class="profile-card">
+            <img src="https://files.catbox.moe/q7dy8o.webp" alt="bully" class="profile-img">
+            <div class="name">bully</div>
+            <img src="https://files.catbox.moe/dxj7nl.png" alt="badge" class="badge">
+            <a href="members.html" class="back-btn">back</a>
+        </div>
     </div>
 
-    <audio autoplay loop>
+    <div class="volume-control">
+        <button class="volume-btn" id="muteBtn">🔊</button>
+        <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
+    </div>
+
+    <audio id="bgMusic" autoplay loop>
         <source src="https://files.catbox.moe/tzhl3v.mp3" type="audio/mpeg">
     </audio>
 
@@ -117,6 +184,30 @@
             raindrop.style.animationDelay = Math.random() * 2 + 's';
             rainContainer.appendChild(raindrop);
         }
+
+        // Volume control
+        const audio = document.getElementById('bgMusic');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const muteBtn = document.getElementById('muteBtn');
+        
+        audio.volume = 0.5;
+        
+        volumeSlider.addEventListener('input', (e) => {
+            audio.volume = e.target.value / 100;
+            muteBtn.textContent = audio.volume === 0 ? '🔇' : '🔊';
+        });
+        
+        muteBtn.addEventListener('click', () => {
+            if (audio.volume > 0) {
+                audio.volume = 0;
+                volumeSlider.value = 0;
+                muteBtn.textContent = '🔇';
+            } else {
+                audio.volume = 0.5;
+                volumeSlider.value = 50;
+                muteBtn.textContent = '🔊';
+            }
+        });
     </script>
 </body>
 </html>
